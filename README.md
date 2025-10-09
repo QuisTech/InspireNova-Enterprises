@@ -53,10 +53,6 @@ Open index.html in your browser to view locally.
 
 Update Web3Forms Access Key in the contact form:
 
-<input type="hidden" name="access_key" value="your-access-key-here">
-
-<img width="1366" height="768" alt="InspireNova3" src="https://github.com/QuisTech/InspireNova-Enterprises" />
-
 Deploy to Vercel.
 
 🖼 Assets
