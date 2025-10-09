@@ -1,4 +1,5 @@
 InspireNova Enterprises Website
+
 📌 Overview
 
 InspireNova Enterprises is a one-page business website built with HTML, CSS, and JavaScript.
@@ -39,7 +40,7 @@ Web3Forms for contact form handling
 
 Clone the repository:
 
-git clone https://github.com/yourusername/inspirenova-website.git
+git clone https://github.com/QuisTech/InspireNova-Enterprises
 
 <img width="1366" height="768" alt="InspireNova1" src="https://github.com/user-attachments/assets/49a26703-ce8b-4bff-85a0-ea1753a9e120" />
 
@@ -54,7 +55,7 @@ Update Web3Forms Access Key in the contact form:
 
 <input type="hidden" name="access_key" value="your-access-key-here">
 
-<img width="1366" height="768" alt="InspireNova3" src="https://github.com/user-attachments/assets/073e573c-ccae-4d16-bac7-cecd2c9c3705" />
+<img width="1366" height="768" alt="InspireNova3" src="https://github.com/QuisTech/InspireNova-Enterprises" />
 
 Deploy to Vercel.
 
