@@ -1,3 +1,10 @@
+// ===== MOBILE NAVIGATION TOGGLE =====
+document.querySelector('.nav-toggle').addEventListener('click', function() {
+  document.querySelector('.main-nav').classList.toggle('active');
+});
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Smooth scrolling for anchor links
@@ -121,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
   
 
   // Mobile Navigation Toggle
+
   const homeLink = document.querySelector('a[href="#home"]');
   if (homeLink) {
     homeLink.addEventListener('click', function(e) {

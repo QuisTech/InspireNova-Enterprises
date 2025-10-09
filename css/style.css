@@ -939,3 +939,65 @@ section {
   color: #a10b0b;
   border: 1px solid #f5a4a4;
 }
+
+
+/* ===== MOBILE NAVIGATION STYLE ===== */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+  }
+
+  .main-nav.active {
+    display: block;
+    position: absolute;
+    top: 100%; /* below the header */
+    left: 0;
+    width: 100%;
+    background: #0a0a0a;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    max-height: 80vh;       /* limit height to 80% of screen */
+    overflow-y: auto;        /* enable vertical scrolling */
+    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
+  }
+
+  .main-nav.active .nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-nav.active .nav-list li a {
+    color: #ffffff; /* white text */
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .main-nav.active .nav-list li a:hover {
+    color: #00bcd4; /* accent color (cyan or brand color) */
+  }
+}
+
+
+.main-nav.active .nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+
+
+
+.nav-toggle i {
+  color: #ffffff;
+}
+
+
