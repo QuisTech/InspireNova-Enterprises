@@ -2,7 +2,7 @@ InspireNova Enterprises Website
 
 📌 Overview
 
-InspireNova Enterprises is a one-page business website built with HTML, CSS, and JavaScript.
+InspireNova Enterprises is built with HTML, CSS, and JavaScript.
 It highlights services, industries, case studies, blog insights, and provides a contact form for lead generation.
 The website is fully responsive, includes a hero slider, smooth scrolling navigation, and integrates with Web3Forms for handling contact form submissions.
 
