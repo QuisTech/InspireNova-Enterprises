@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InspireNova Enterprises - Comprehensive Company Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #db4826;
+            --primary-light: #e87a63;
+            --bg-card: #1a1a1a;
+            --bg-dark: #121212;
+            --border: #444;
+            --text-light: #f5f5f5;
+            --text-muted: #aaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active, .nav-dot:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Slide Base Styles - IMPROVED */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh; /* Changed from height: 100vh */
+            height: auto; /* Added to allow content to expand naturally */
+            display: flex;
+            align-items: flex-start; /* Changed from center to prevent overflow */
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .icon {
+            font-size: 3rem;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        /* Content Boxes - IMPROVED */
+        .content-box {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        .problem {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .content-box ul {
+            list-style-type: none;
+        }
+
+        .content-box li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .content-box li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .conclusion {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(219, 74, 43, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Status Boxes - IMPROVED */
+        .status-box, .focus-box, .team-box, .hiring-box {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        .demo-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .demo-button:hover {
+            background-color: #b93a1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tech Stack */
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tech-icon {
+            background-color: rgba(219, 74, 43, 0.2);
+            color: var(--primary-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(219, 74, 43, 0.3);
+        }
+
+        /* Market Stats */
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .big-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Customer Grid */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .customer {
+            background-color: var(--bg-card);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan {
+            background-color: var(--bg-card);
+            padding: 2rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan.pro {
+            border: 2px solid var(--primary);
+            background-color: rgba(219, 74, 43, 0.1);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .target {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .add-ons {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Use of Funds */
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .allocation-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .allocation-label {
+            flex: 0 0 40%;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .allocation-bar {
+            flex: 1;
+            height: 10px;
+            background-color: var(--bg-dark);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .allocation-bar span {
+            display: block;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+
+        .allocation-percent {
+            flex: 0 0 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Milestones */
+        .milestones {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .milestone {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .milestone-check {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .milestone-text {
+            flex: 1;
+            color: var(--text-light);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .phase {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .phase.active-phase {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .phase:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .phase-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details p {
+            color: var(--text-muted);
+        }
+
+        /* Team & Hiring */
+        .hiring-roles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .role {
+            background-color: var(--bg-dark);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        /* Service Cards */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Financial Table - IMPROVED */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .financial-table thead {
+            background-color: rgba(219, 74, 43, 0.2);
+        }
+
+        .financial-table th, 
+        .financial-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .financial-table th:nth-child(n+2), 
+        .financial-table td:nth-child(n+2) {
+            text-align: right;
+        }
+
+        /* Hero Section Style */
+        .hero-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-section h1 {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff6b35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form Styles */
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: inherit;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #b93a1e;
+        }
+
+        /* Form Message */
+        #formMessage {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #4CAF50;
+        }
+
+        .error {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            color: #F44336;
+        }
+
+        /* Responsive Design - IMPROVED with additional breakpoints */
+        @media (max-width: 1024px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .market-stats, .pricing-table {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .financial-table {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .market-stats, .pricing-table {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-dots {
+                display: none;
+            }
+            
+            .hiring-roles {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-table {
+                font-size: 0.8rem;
+            }
+            
+            .financial-table th, 
+            .financial-table td {
+                padding: 8px 6px;
+            }
+            
+            .allocation-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .allocation-label {
+                flex: 1;
+            }
+            
+            .allocation-bar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-box {
+                padding: 1.5rem;
+            }
+            
+            .hero-section {
+                padding: 1rem 0;
+            }
+            
+            .market-stats, .pricing-table {
+                gap: 1rem;
+            }
+            
+            .stat, .plan {
+                padding: 1rem;
+            }
+            
+            .big-number, .price {
+                font-size: 2rem;
+            }
+            
+            .financial-table {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <a href="#slide1" class="nav-dot active"></a>
+        <a href="#slide2" class="nav-dot"></a>
+        <a href="#slide3" class="nav-dot"></a>
+        <a href="#slide4" class="nav-dot"></a>
+        <a href="#slide5" class="nav-dot"></a>
+        <a href="#slide6" class="nav-dot"></a>
+        <a href="#slide7" class="nav-dot"></a>
+        <a href="#slide8" class="nav-dot"></a>
+    </nav>
+
+    <!-- Slide 1: Executive Summary -->
+    <section id="slide1" class="slide active">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🚀</span> InspireNova Enterprises</h1>
+                <p class="tagline">Empowering Nigerian Businesses Through Smart Technology</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Executive Summary</h2>
+                <p>InspireNova Enterprises is a forward-thinking technology company headquartered in Abuja, Nigeria. We bridge the gap between today's business challenges and tomorrow's innovations through comprehensive IT solutions, app development, and digital transformation consulting.</p>
+                
+                <p>Our mission is to empower Nigerian businesses with reliable, scalable technology that drives efficiency, competitiveness, and sustainable growth. We deliver end-to-end solutions from hardware and cybersecurity to custom software development, with future-ready expertise in AI, automation, and cybersecurity built into our core offerings.</p>
+            </div>
+
+            <div class="content-box">
+                <h2>Key Highlights</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>End-to-End Solutions:</strong> Comprehensive suite from hardware to custom software</li>
+                            <li><strong>Future-Ready Expertise:</strong> AI, automation, and cybersecurity integrated into all services</li>
+                            <li><strong>Local Market Understanding:</strong> Solutions designed for Nigerian business realities</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Global Standards:</strong> World-class technical excellence adapted for local context</li>
+                            <li><strong>Proven Results:</strong> Track record of delivering measurable client improvements</li>
+                            <li><strong>Strategic Partnerships:</strong> Collaborations with leading global and local tech brands</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Mission, Vision & Values -->
+    <section id="slide2" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🎯</span> Our Purpose</h1>
+                <p class="tagline">Mission, Vision & Core Values</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Our Mission</h2>
+                        <p>To empower Nigerian businesses and individuals with innovative, reliable, and scalable technology solutions that drive efficiency, competitiveness, and sustainable growth.</p>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Our Vision</h2>
+                        <p>To become Africa's most trusted and dynamic technology partner — powering digital transformation across industries.</p>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Our Core Values</h2>
+                        <div class="milestones">
+                            <div class="milestone">
+                                <span class="milestone-check">💡</span>
+                                <div class="milestone-text">
+                                    <strong>Innovation:</strong> We pioneer solutions that move businesses forward.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🤝</span>
+                                <div class="milestone-text">
+                                    <strong>Integrity:</strong> We build trust through transparency and reliability.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🎯</span>
+                                <div class="milestone-text">
+                                    <strong>Customer Success:</strong> We focus on delivering measurable results.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">⭐</span>
+                                <div class="milestone-text">
+                                    <strong>Excellence:</strong> We strive for quality in everything we do.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Services & Solutions -->
+    <section id="slide3" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🛠️</span> Our Services</h1>
+                <p class="tagline">Comprehensive Technology Solutions</p>
+            </div>
+            
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>IT & Infrastructure Services</h3>
+                    <p>Reliable, scalable, and secure IT systems tailored for your business.</p>
+                    <ul>
+                        <li>Managed IT Support</li>
+                        <li>Network Setup & Maintenance</li>
+                        <li>Cloud Migration & Hosting</li>
+                        <li>Data Backup & Recovery</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Cybersecurity Solutions</h3>
+                    <p>Protecting your business from digital threats.</p>
+                    <ul>
+                        <li>Threat Detection & Mitigation</li>
+                        <li>Security Assessments & Compliance</li>
+                        <li>Endpoint & Cloud Protection</li>
+                        <li>Employee Security Training</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>App & Website Development</h3>
+                    <p>Building digital experiences that engage and convert.</p>
+                    <ul>
+                        <li>Custom Mobile App Development</li>
+                        <li>Corporate Website Design</li>
+                        <li>E-commerce Platforms</li>
+                        <li>AI-Driven User Experiences</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Digital Transformation Consulting</h3>
+                    <p>Guiding your business into the future.</p>
+                    <ul>
+                        <li>Cloud Strategy Development</li>
+                        <li>Process Automation & AI Integration</li>
+                        <li>Blockchain & IoT Advisory</li>
+                        <li>Change Management Support</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>Hardware & Software Sales</h3>
+                    <p>Genuine, affordable tech products from trusted global brands.</p>
+                    <ul>
+                        <li>Laptops, Desktops, Servers & Peripherals</li>
+                        <li>Software Licensing</li>
+                        <li>Device Setup & Technical Support</li>
+                        <li>Maintenance & Warranty Services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Market Analysis -->
+    <section id="slide4" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">📈</span> Market Analysis</h1>
+                <p class="tagline">Opportunities in Nigeria's Growing Tech Sector</p>
+            </div>
+            
+            <div class="market-stats">
+                <div class="stat">
+                    <h3>Nigerian SMEs</h3>
+                    <p class="big-number">41M+</p>
+                    <p>Potential customers for our solutions</p>
+                </div>
+                <div class="stat">
+                    <h3>Internet Penetration</h3>
+                    <p class="big-number">45.4%</p>
+                    <p>And growing rapidly</p>
+                </div>
+                <div class="stat">
+                    <h3>Digital Economy Value</h3>
+                    <p class="big-number">$40B</p>
+                    <p>Projected by 2025</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Industry Overview</h2>
+                <p>Nigeria's technology sector is experiencing significant growth, driven by increasing internet penetration, mobile device usage, and digital transformation initiatives across various industries. The demand for reliable IT services, innovative app and website development, and high-quality hardware and software solutions is rising rapidly.</p>
+            </div>
+
+            <div class="content-box">
+                <h2>Target Markets</h2>
+                <div class="customer-grid">
+                    <div class="customer">✅ Small & Medium Enterprises</div>
+                    <div class="customer">✅ Finance & Fintech</div>
+                    <div class="customer">✅ E-commerce & Retail</div>
+                    <div class="customer">✅ Education Sector</div>
+                    <div class="customer">✅ Public Sector</div>
+                    <div class="customer">✅ Corporate Clients</div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Market Trends</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>Mobile-First Internet Usage:</strong> Majority of internet users access online services via smartphones</li>
+                            <li><strong>Digital Transformation:</strong> Increasing adoption of cloud computing, AI, and cybersecurity measures</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>E-commerce Growth:</strong> Rapid expansion of online retail platforms and digital payment solutions</li>
+                            <li><strong>Local Payment Integration:</strong> Preference for payment gateways like Paystack and Flutterwave</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Operational Plan -->
+    <section id="slide5" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🏢</span> Operational Plan</h1>
+                <p class="tagline">Building Africa's Future Through Technology</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Location & Facilities</h2>
+                        <p><strong>Headquarters:</strong> Abuja, Nigeria</p>
+                        <p><strong>Physical Presence:</strong> Partnering with local retailers for hardware and smartphone sales</p>
+                        <p><strong>Online Presence:</strong> Robust eCommerce platform to facilitate online sales and service bookings</p>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Technology Infrastructure</h2>
+                        <ul>
+                            <li><strong>Website Development:</strong> Responsive, secure, and scalable platform built on latest technologies</li>
+                            <li><strong>IT Infrastructure:</strong> Cloud-based systems for data management and service delivery</li>
+                            <li><strong>Security Measures:</strong> Robust cybersecurity protocols to protect client data and business operations</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Supply Chain Management</h2>
+                        <ul>
+                            <li><strong>Vendor Relationships:</strong> Strong partnerships with hardware and software suppliers</li>
+                            <li><strong>Inventory Management:</strong> Efficient systems for tracking and managing product inventory</li>
+                            <li><strong>Logistics:</strong> Reliable delivery and fulfillment processes to ensure timely product delivery</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Quality Assurance</h2>
+                        <ul>
+                            <li>Rigorous testing protocols for all software and hardware solutions</li>
+                            <li>Continuous monitoring and improvement of service delivery processes</li>
+                            <li>Regular client feedback collection and implementation</li>
+                            <li>Compliance with international quality standards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Risk Management -->
+    <section id="slide6" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">⚠️</span> Risk Management</h1>
+                <p class="tagline">Proactive Strategies for Sustainable Growth</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Identified Risks & Mitigation Strategies</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="content-box problem">
+                            <h3>Market Risks</h3>
+                            <p><strong>Economic Instability:</strong> Fluctuations in the Nigerian economy could impact consumer spending.</p>
+                            <p><strong>Mitigation:</strong> Diversify revenue streams and offer flexible pricing models to accommodate different budget levels.</p>
+                        </div>
+                        
+                        <div class="content-box problem">
+                            <h3>Operational Risks</h3>
+                            <p><strong>Supply Chain Disruptions:</strong> Delays or shortages in hardware and software supplies.</p>
+                            <p><strong>Mitigation:</strong> Establish multiple supplier relationships and maintain adequate inventory levels.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="column">
+                        <div class="content-box problem">
+                            <h3>Technological Risks</h3>
+                            <p><strong>Rapid Technological Changes:</strong> Keeping up with the latest tech trends and integrating new technologies.</p>
+                            <p><strong>Mitigation:</strong> Invest in continuous training for the team and allocate resources for research and development.</p>
+                        </div>
+                        
+                        <div class="content-box problem">
+                            <h3>Cybersecurity Risks</h3>
+                            <p><strong>Data Breaches:</strong> Potential threats to client and company data.</p>
+                            <p><strong>Mitigation:</strong> Implement robust cybersecurity measures, conduct regular security audits, and provide employee training on data protection.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-box">
+                <h2>Competitive Analysis</h2>
+                <div class="content-box">
+                    <h3>Competitive Risks</h3>
+                    <p><strong>Intense Competition:</strong> Presence of established local and international tech companies.</p>
+                    <p><strong>Mitigation:</strong> Focus on niche markets, offer superior customer service, and continuously innovate to differentiate from competitors.</p>
+                </div>
+                
+                <div class="content-box">
+                    <h3>Competitive Advantage</h3>
+                    <ul>
+                        <li><strong>Integrated Service Portfolio:</strong> Unique combination of hardware, software, security, and consulting under one roof</li>
+                        <li><strong>Local Understanding, Global Standards:</strong> Deep knowledge of Nigerian market combined with international best practices</li>
+                        <li><strong>Customer-Centric Model:</strong> Focus on delivering measurable results and building long-term partnerships</li>
+                        <li><strong>Focus on Innovation:</strong> Continuous investment in future-ready technologies like AI and blockchain</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Financial Plan -->
+    <section id="slide7" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">💰</span> Financial Plan</h1>
+                <p class="tagline">Sustainable Growth & Profitability</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Revenue Streams</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>Product Sales:</strong> Revenue from selling computer hardware, smartphones, and software licenses</li>
+                            <li><strong>Service Fees:</strong> Income from app and website development, IT consulting, and managed IT services</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Subscription Models:</strong> Recurring revenue from managed IT services and software subscriptions</li>
+                            <li><strong>Consulting Fees:</strong> Earnings from digital transformation consulting projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Financial Projections (3-Year Outlook)</h2>
+                <div class="content-box">
+                    <h3>Projected Profit & Loss Statement</h3>
+                    <table class="financial-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Year 1 (₦)</th>
+                                <th>Year 2 (₦)</th>
+                                <th>Year 3 (₦)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Revenue</td>
+                                <td>240,000,000</td>
+                                <td>390,000,000</td>
+                                <td>540,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Cost of Goods Sold</td>
+                                <td>120,000,000</td>
+                                <td>180,000,000</td>
+                                <td>240,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Gross Profit</td>
+                                <td>120,000,000</td>
+                                <td>210,000,000</td>
+                                <td>300,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Expenses</td>
+                                <td>80,000,000</td>
+                                <td>120,000,000</td>
+                                <td>160,000,000</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <td>Net Profit</td>
+                                <td>40,000,000</td>
+                                <td>90,000,000</td>
+                                <td>140,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Funding Requirements & Break-Even Analysis</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="content-box">
+                            <h3>Initial Funding Requirements</h3>
+                            <ul>
+                                <li><strong>Initial Capital:</strong> ₦100,000,000 for inventory, technology infrastructure, and initial marketing campaigns</li>
+                                <li><strong>Operational Costs:</strong> ₦50,000,000 annually for salaries, rent, utilities, and other operational expenses</li>
+                                <li><strong>Development Costs:</strong> ₦30,000,000 for website development, app development, and IT infrastructure setup</li>
+                                <li><strong>Marketing Budget:</strong> ₦20,000,000 for digital marketing, advertising, and promotional activities</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content-box">
+                            <h3>Break-Even Analysis</h3>
+                            <p><strong>Projected Break-Even Point:</strong> Within 18 months of operation, based on current revenue and cost projections.</p>
+                            <p>This projection is based on achieving 60% utilization of our service capacity and maintaining a 40% gross margin on product sales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Team & Contact -->
+    <section id="slide8" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">👥</span> Team & Contact</h1>
+                <p class="tagline">Building Africa's Future Together</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Recruitment Plan</h2>
+                        <div class="roadmap">
+                            <div class="phase active-phase">
+                                <span class="phase-icon">👤</span>
+                                <div class="phase-details">
+                                    <h3>Phase 1</h3>
+                                    <p>Hire key technical and sales personnel to establish core operations.</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">🚀</span>
+                                <div class="phase-details">
+                                    <h3>Phase 2</h3>
+                                    <p>Expand the team as business scales, focusing on specialized roles in AI, cybersecurity, and cloud services.</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">📚</span>
+                                <div class="phase-details">
+                                    <h3>Phase 3</h3>
+                                    <p>Continuous training and development to keep the team updated with the latest technologies and market trends.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Next Hiring Priorities</h2>
+                        <div class="hiring-roles">
+                            <span class="role">Full-Stack Developer</span>
+                            <span class="role">Cybersecurity Specialist</span>
+                            <span class="role">Sales Executive</span>
+                            <span class="role">Customer Success Manager</span>
+                            <span class="role">Digital Marketing Specialist</span>
+                            <span class="role">IT Support Technician</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Contact Information</h2>
+                        <div class="milestones">
+                            <div class="milestone">
+                                <span class="milestone-check">🏢</span>
+                                <div class="milestone-text">
+                                    <strong>Head Office:</strong> Abuja, Nigeria
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">📞</span>
+                                <div class="milestone-text">
+                                    <strong>Phone:</strong> +234 806 694 2864
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">✉️</span>
+                                <div class="milestone-text">
+                                    <strong>Email:</strong> michquis@gmail.com
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🌐</span>
+                                <div class="milestone-text">
+                                    <strong>Website:</strong> https://inspire-nova-enterprises.vercel.app/
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">👤</span>
+                                <div class="milestone-text">
+                                    <strong>Founder:</strong> Marquis Abimbola Michael
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Schedule a Free Consultation</h2>
+                        <p>Ready to transform your business? Let's discuss your technology needs.</p>
+                        
+                        <!-- Consultation Form -->
+                        <div class="contact-form" style="margin-top: 1.5rem;">
+                            <form id="consultationForm" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="e2da5857-495c-4f65-abf8-ceea174953af">
+                                <input type="hidden" name="subject" value="New Consultation Request - InspireNova Business Plan">
+                                <input type="hidden" name="from_name" value="InspireNova Business Plan Presentation">
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Full Name *</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email Address *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="phone" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="service" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Service Interested In *</label>
+                                    <select id="service" name="service" required>
+                                        <option value="">Select a service</option>
+                                        <option value="it-infrastructure">IT & Infrastructure Services</option>
+                                        <option value="cybersecurity">Cybersecurity Solutions</option>
+                                        <option value="app-development">App & Website Development</option>
+                                        <option value="digital-transformation">Digital Transformation Consulting</option>
+                                        <option value="hardware-software">Hardware & Software Sales</option>
+                                        <option value="investment">Investment Opportunity</option>
+                                        <option value="partnership">Partnership</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="company" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Company/Organization</label>
+                                    <input type="text" id="company" name="company">
+                                </div>
+
+                                <div style="margin-bottom: 1.5rem;">
+                                    <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Tell us about your needs *</label>
+                                    <textarea id="message" name="message" rows="4" required placeholder="Please describe your project, timeline, and any specific requirements..."></textarea>
+                                </div>
+
+                                <button type="submit">
+                                    <span class="button-text">Schedule Free Consultation</span>
+                                    <span class="loading-spinner" style="display: none;">Sending...</span>
+                                </button>
+                            </form>
+
+                            <!-- Success/Error message container -->
+                            <div id="formMessage" style="margin-top: 1rem; padding: 12px; border-radius: 4px; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <p>✅ InspireNova Enterprises is positioned to become Nigeria's premier technology partner, recognized for our commitment to excellence, innovation, and customer-centric solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple script for slide navigation and interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            // Function to show a specific slide
+            function showSlide(slideIndex) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Remove active class from all nav dots
+                navDots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                // Show the selected slide
+                slides[slideIndex].classList.add('active');
+                
+                // Activate the corresponding nav dot
+                navDots[slideIndex].classList.add('active');
+            }
+            
+            // Set up click events for navigation dots
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const currentSlide = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+                
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                    // Next slide
+                    const nextSlide = (currentSlide + 1) % slides.length;
+                    showSlide(nextSlide);
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    // Previous slide
+                    const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(prevSlide);
+                }
+            });
+            
+            // Initialize the first slide
+            showSlide(0);
+            
+            // Form submission handling
+            const form = document.getElementById('consultationForm');
+            const formMessage = document.getElementById('formMessage');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const buttonText = submitButton.querySelector('.button-text');
+                    const loadingSpinner = submitButton.querySelector('.loading-spinner');
+                    
+                    // Show loading state
+                    buttonText.style.display = 'none';
+                    loadingSpinner.style.display = 'inline';
+                    submitButton.disabled = true;
+                    
+                    // Get form data
+                    const formData = new FormData(form);
+                    
+                    // Submit form using fetch
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Show success message
+                            formMessage.textContent = 'Thank you! Your consultation request has been submitted successfully.';
+                            formMessage.className = 'success';
+                            formMessage.style.display = 'block';
+                            
+                            // Reset form
+                            form.reset();
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        // Show error message
+                        formMessage.textContent = 'Sorry, there was an error submitting your request. Please try again or contact us directly.';
+                        formMessage.className = 'error';
+                        formMessage.style.display = 'block';
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        buttonText.style.display = 'inline';
+                        loadingSpinner.style.display = 'none';
+                        submitButton.disabled = false;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

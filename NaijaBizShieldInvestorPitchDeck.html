@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InspireNova Enterprises - Investor Pitch Deck</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #db4826;
+            --primary-light: #e87a63;
+            --bg-card: #1a1a1a;
+            --bg-dark: #121212;
+            --border: #444;
+            --text-light: #f5f5f5;
+            --text-muted: #aaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active, .nav-dot:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Slide Base Styles - UPDATED */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh; /* Changed from height: 100vh */
+            height: auto; /* Added to allow content to expand naturally */
+            display: flex;
+            align-items: flex-start; /* Changed from center to prevent overflow */
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .icon {
+            font-size: 3rem;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        /* Content Boxes - UPDATED */
+        .content-box {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        .problem {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .content-box ul {
+            list-style-type: none;
+        }
+
+        .content-box li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .content-box li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .conclusion {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(219, 74, 43, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Status Boxes - UPDATED */
+        .status-box, .focus-box, .team-box, .hiring-box {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden; /* Added to prevent content overflow */
+        }
+
+        .demo-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .demo-button:hover {
+            background-color: #b93a1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tech Stack */
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tech-icon {
+            background-color: rgba(219, 74, 43, 0.2);
+            color: var(--primary-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(219, 74, 43, 0.3);
+        }
+
+        /* Market Stats */
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .big-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Customer Grid */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .customer {
+            background-color: var(--bg-card);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan {
+            background-color: var(--bg-card);
+            padding: 2rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan.pro {
+            border: 2px solid var(--primary);
+            background-color: rgba(219, 74, 43, 0.1);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .target {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .add-ons {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Use of Funds */
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .allocation-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .allocation-label {
+            flex: 0 0 40%;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .allocation-bar {
+            flex: 1;
+            height: 10px;
+            background-color: var(--bg-dark);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .allocation-bar span {
+            display: block;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+
+        .allocation-percent {
+            flex: 0 0 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Milestones */
+        .milestones {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .milestone {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .milestone-check {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .milestone-text {
+            flex: 1;
+            color: var(--text-light);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .phase {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .phase.active-phase {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .phase:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .phase-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details p {
+            color: var(--text-muted);
+        }
+
+        /* Team & Hiring */
+        .hiring-roles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .role {
+            background-color: var(--bg-dark);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        /* Hero Section Style */
+        .hero-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-section h1 {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff6b35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Responsive Design - UPDATED with additional breakpoints */
+        @media (max-width: 1024px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .market-stats, .pricing-table {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .market-stats, .pricing-table {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-dots {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-box {
+                padding: 1.5rem;
+            }
+            
+            .hero-section {
+                padding: 1rem 0;
+            }
+            
+            .market-stats, .pricing-table {
+                gap: 1rem;
+            }
+            
+            .stat, .plan {
+                padding: 1rem;
+            }
+            
+            .big-number, .price {
+                font-size: 2rem;
+            }
+            
+            .hiring-roles {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <a href="#slide1" class="nav-dot active"></a>
+        <a href="#slide2" class="nav-dot"></a>
+        <a href="#slide3" class="nav-dot"></a>
+        <a href="#slide4" class="nav-dot"></a>
+        <a href="#slide5" class="nav-dot"></a>
+    </nav>
+
+    <!-- Slide 1: Vision & Problem -->
+    <section id="slide1" class="slide active">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🚀</span> InspireNova Enterprises</h1>
+                <p class="tagline">Powering AI-Driven Businesses Across Africa & Beyond</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Our Vision</h2>
+                <p>To build scalable AI-powered SaaS products that solve critical business challenges across industries — starting with SME security.</p>
+            </div>
+
+            <div class="content-box problem">
+                <h2>The SME Security Problem <span style="color: var(--text-muted); font-size: 1rem;">(Nigeria Focus)</span></h2>
+                <ul>
+                    <li>Nigerian SMEs face <strong>growing digital threats</strong> without proper security infrastructure.</li>
+                    <li>Business owners lack <strong>awareness and tools</strong> to assess their security vulnerabilities.</li>
+                    <li>Traditional security solutions are <strong>too expensive and complex</strong> for small businesses.</li>
+                    <li>Security breaches cost Nigerian businesses <strong>billions of Naira annually</strong>.</li>
+                </ul>
+            </div>
+
+            <div class="conclusion">
+                <p>✅ There is a critical need for <strong>affordable, accessible security tools</strong> designed specifically for Nigerian SMEs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Our MVP - NaijaBiz Shield -->
+    <section id="slide2" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🛡️</span> NaijaBiz Shield</h1>
+                <p class="tagline">Digital Resilience Platform for Nigerian SMEs</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>What It Does</h2>
+                        <ol style="color: var(--text-light); padding-left: 1.5rem;">
+                            <li style="margin-bottom: 1rem;">SMEs complete a <strong>10-minute security assessment</strong>.</li>
+                            <li style="margin-bottom: 1rem;">AI analyzes business vulnerabilities across multiple categories.</li>
+                            <li style="margin-bottom: 1rem;">Generates <strong>personalized risk score & recommendations</strong>.</li>
+                            <li style="margin-bottom: 1rem;">Provides <strong>current threat alerts</strong> specific to Nigerian businesses.</li>
+                            <li>Delivers comprehensive <strong>PDF security reports</strong> with actionable steps.</li>
+                        </ol>
+
+                        <div class="tech-stack" style="margin-top: 2rem;">
+                            <h3>Built With:</h3>
+                            <div class="tech-icons">
+                                <span class="tech-icon"><i class="fab fa-react"></i> Next.js</span>
+                                <span class="tech-icon"><i class="fab fa-python"></i> FastAPI</span>
+                                <span class="tech-icon"><i class="fas fa-database"></i> PostgreSQL</span>
+                                <span class="tech-icon"><i class="fas fa-file-pdf"></i> ReportLab</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="status-box">
+                        <p>✅ <strong>Live platform available</strong> – Full assessment & reporting functional</p>
+                        <a href="https://naijabiz-shield-insp.vercel.app" target="_blank" class="demo-button">🌐 View Live Platform</a>
+                    </div>
+                    <div class="focus-box">
+                        <h3>Current MVP Focus</h3>
+                        <p>Security assessment, threat intelligence, and personalized recommendations for Nigerian SMEs.</p>
+                        <p><strong>Backend:</strong> FastAPI with PostgreSQL database</p>
+                        <p><strong>Frontend:</strong> Next.js with responsive design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Market & Business Model -->
+    <section id="slide3" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">📈</span> Massive Market Opportunity</h1>
+                <p class="tagline">Growing Digital Security Needs for African SMEs</p>
+            </div>
+            
+            <div class="market-stats">
+                <div class="stat">
+                    <h3>Nigerian SMEs</h3>
+                    <p class="big-number">44M+</p>
+                </div>
+                <div class="stat">
+                    <h3>Annual Cyber Losses</h3>
+                    <p class="big-number">$500M+</p>
+                </div>
+                <div class="stat">
+                    <h3>SME Security Market</h3>
+                    <p class="big-number">$2B+</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Target Customers</h2>
+                <div class="customer-grid">
+                    <div class="customer">✅ Small retail businesses</div>
+                    <div class="customer">✅ Service providers</div>
+                    <div class="customer">✅ Tech startups</div>
+                    <div class="customer">✅ Local manufacturers</div>
+                    <div class="customer">✅ E-commerce stores</div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Business Model (Freemium SaaS)</h2>
+                <div class="pricing-table">
+                    <div class="plan">
+                        <h3>Basic</h3>
+                        <p class="price">Free</p>
+                        <p class="target">Security assessment & basic report</p>
+                    </div>
+                    <div class="plan pro">
+                        <h3>Pro</h3>
+                        <p class="price">₦5,000<span>/mo</span></p>
+                        <p class="target">Detailed reports & monitoring</p>
+                    </div>
+                    <div class="plan enterprise">
+                        <h3>Business</h3>
+                        <p class="price">₦15,000<span>/mo</span></p>
+                        <p class="target">Advanced features & support</p>
+                    </div>
+                </div>
+                <p class="add-ons"><strong>Add-ons:</strong> Custom security audits, employee training, compliance reporting.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Pre-Seed Ask -->
+    <section id="slide4" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">💰</span> Pre-Seed Investment</h1>
+                <p class="tagline">₦25M – ₦35M (USD $20K – $28K)</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Use of Funds</h2>
+                        <div class="allocation-list">
+                            <div class="allocation-item">
+                                <span class="allocation-label">Platform enhancement & feature development</span>
+                                <span class="allocation-bar"><span style="width: 30%;"></span></span>
+                                <span class="allocation-percent">30%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-label">Sales & marketing to Nigerian SMEs</span>
+                                <span class="allocation-bar"><span style="width: 25%;"></span></span>
+                                <span class="allocation-percent">25%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-label">Additional engineers (backend & frontend)</span>
+                                <span class="allocation-bar"><span style="width: 20%;"></span></span>
+                                <span class="allocation-percent">20%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-label">Customer support & operations</span>
+                                <span class="allocation-bar"><span style="width: 15%;"></span></span>
+                                <span class="allocation-percent">15%</span>
+                            </div>
+                            <div class="allocation-item">
+                                <span class="allocation-label">Legal, cloud, operational runway</span>
+                                <span class="allocation-bar"><span style="width: 10%;"></span></span>
+                                <span class="allocation-percent">10%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="content-box">
+                        <h2>12-Month Milestones</h2>
+                        <div class="milestones">
+                            <div class="milestone">
+                                <span class="milestone-check">✅</span>
+                                <div class="milestone-text">
+                                    <strong>Month 1–2:</strong> Enhance platform with advanced security features
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">✅</span>
+                                <div class="milestone-text">
+                                    <strong>Month 3–5:</strong> Onboard first 500 Nigerian SMEs
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">✅</span>
+                                <div class="milestone-text">
+                                    <strong>Month 6–9:</strong> Launch premium tiers & achieve 5% conversion
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">✅</span>
+                                <div class="milestone-text">
+                                    <strong>Month 10–12:</strong> Expand to other African markets
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Roadmap & Team -->
+    <section id="slide5" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🌍</span> AI SaaS Ecosystem</h1>
+                <p class="tagline">NaijaBiz Shield is just the beginning</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Product Roadmap</h2>
+                        <div class="roadmap">
+                            <div class="phase active-phase">
+                                <span class="phase-icon">✅</span>
+                                <div class="phase-details">
+                                    <h3>Phase 1</h3>
+                                    <p><strong>NaijaBiz Shield</strong><br>SME cashflow & fraud monitoring SaaS</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">📍</span>
+                                <div class="phase-details">
+                                    <h3>Phase 2</h3>
+                                    <p><strong>TalentMatch AI</strong><br>HRTech – AI hiring & candidate intelligence</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">📍</span>
+                                <div class="phase-details">
+                                    <h3>Phase 3</h3>
+                                    <p><strong>EduNova</strong><br>AI-powered school management</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">📍</span>
+                                <div class="phase-details">
+                                    <h3>Phase 4</h3>
+                                    <p><strong>AI Ops Assistant</strong><br>Universal AI business command center</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Team & Execution</h2>
+                        <div class="team-box">
+                            <h3>Founding Capability</h3>
+                            <ul>
+                                <li>👤 <strong>Founder:</strong> Built complete NaijaBiz Shield platform (Next.js + FastAPI + PostgreSQL)</li>
+                                <li>✅ Strong product & tech execution ability</li>
+                                <li>✅ Deep understanding of Nigerian SME market needs</li>
+                                <li>✅ Ready to lead engineering + growth strategy, expand team post-funding</li>
+                            </ul>
+                        </div>
+                        <div class="hiring-box" style="margin-top: 2rem;">
+                            <h3>Next Hires</h3>
+                            <div class="hiring-roles">
+                                <span class="role">Growth Marketer</span>
+                                <span class="role">Sales Lead</span>
+                                <span class="role">Customer Success</span>
+                                <span class="role">Full-stack Dev</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple script for slide navigation and interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            // Function to show a specific slide
+            function showSlide(slideIndex) {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                // Remove active class from all nav dots
+                navDots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                // Show the selected slide
+                slides[slideIndex].classList.add('active');
+                
+                // Activate the corresponding nav dot
+                navDots[slideIndex].classList.add('active');
+            }
+            
+            // Set up click events for navigation dots
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                const currentSlide = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+                
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                    // Next slide
+                    const nextSlide = (currentSlide + 1) % slides.length;
+                    showSlide(nextSlide);
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    // Previous slide
+                    const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(prevSlide);
+                }
+            });
+            
+            // Initialize the first slide
+            showSlide(0);
+        });
+    </script>
+</body>
+</html>
