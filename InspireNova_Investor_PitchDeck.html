@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InspireNova Enterprises - Sustainable Tech Innovation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* All CSS styles from the original template remain exactly the same */
+        :root {
+            --primary: #db4826;
+            --primary-light: #e87a63;
+            --bg-card: #1a1a1a;
+            --bg-dark: #121212;
+            --border: #444;
+            --text-light: #f5f5f5;
+            --text-muted: #aaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active, .nav-dot:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Slide Base Styles */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .icon {
+            font-size: 3rem;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+
+        /* Content Boxes */
+        .content-box {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .problem {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .content-box ul {
+            list-style-type: none;
+        }
+
+        .content-box li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .content-box li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .conclusion {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(219, 74, 43, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Status Boxes */
+        .status-box, .focus-box, .team-box, .hiring-box {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .demo-button:hover {
+            background-color: #b93a1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tech Stack */
+        .tech-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tech-icon {
+            background-color: rgba(219, 74, 43, 0.2);
+            color: var(--primary-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(219, 74, 43, 0.3);
+        }
+
+        /* Market Stats */
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .big-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Customer Grid */
+        .customer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .customer {
+            background-color: var(--bg-card);
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan {
+            background-color: var(--bg-card);
+            padding: 2rem 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan.pro {
+            border: 2px solid var(--primary);
+            background-color: rgba(219, 74, 43, 0.1);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .target {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .add-ons {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Use of Funds */
+        .allocation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .allocation-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .allocation-label {
+            flex: 0 0 40%;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .allocation-bar {
+            flex: 1;
+            height: 10px;
+            background-color: var(--bg-dark);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .allocation-bar span {
+            display: block;
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 5px;
+        }
+
+        .allocation-percent {
+            flex: 0 0 50px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Milestones */
+        .milestones {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .milestone {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .milestone-check {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .milestone-text {
+            flex: 1;
+            color: var(--text-light);
+        }
+
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .phase {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .phase.active-phase {
+            background-color: rgba(219, 74, 43, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .phase:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .phase-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .phase-details p {
+            color: var(--text-muted);
+        }
+
+        /* Team & Hiring */
+        .hiring-roles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .role {
+            background-color: var(--bg-dark);
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid var(--border);
+            color: var(--text-light);
+        }
+
+        /* Service Cards */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Financial Table */
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .financial-table thead {
+            background-color: rgba(219, 74, 43, 0.2);
+        }
+
+        .financial-table th, 
+        .financial-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .financial-table th:nth-child(n+2), 
+        .financial-table td:nth-child(n+2) {
+            text-align: right;
+        }
+
+        /* Hero Section Style */
+        .hero-section {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero-section h1 {
+            background: linear-gradient(135deg, var(--primary) 0%, #ff6b35 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Form Styles */
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: inherit;
+        }
+
+        .contact-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #b93a1e;
+        }
+
+        /* Form Message */
+        #formMessage {
+            margin-top: 1rem;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            color: #4CAF50;
+        }
+
+        .error {
+            background-color: rgba(244, 67, 54, 0.2);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+            color: #F44336;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .market-stats, .pricing-table {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .financial-table {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .market-stats, .pricing-table {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-dots {
+                display: none;
+            }
+            
+            .hiring-roles {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-table {
+                font-size: 0.8rem;
+            }
+            
+            .financial-table th, 
+            .financial-table td {
+                padding: 8px 6px;
+            }
+            
+            .allocation-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .allocation-label {
+                flex: 1;
+            }
+            
+            .allocation-bar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-box {
+                padding: 1.5rem;
+            }
+            
+            .hero-section {
+                padding: 1rem 0;
+            }
+            
+            .market-stats, .pricing-table {
+                gap: 1rem;
+            }
+            
+            .stat, .plan {
+                padding: 1rem;
+            }
+            
+            .big-number, .price {
+                font-size: 2rem;
+            }
+            
+            .financial-table {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Dots -->
+    <nav class="nav-dots">
+        <a href="#slide1" class="nav-dot active"></a>
+        <a href="#slide2" class="nav-dot"></a>
+        <a href="#slide3" class="nav-dot"></a>
+        <a href="#slide4" class="nav-dot"></a>
+        <a href="#slide5" class="nav-dot"></a>
+        <a href="#slide6" class="nav-dot"></a>
+        <a href="#slide7" class="nav-dot"></a>
+        <a href="#slide8" class="nav-dot"></a>
+    </nav>
+
+    <!-- Slide 1: Executive Summary -->
+    <section id="slide1" class="slide active">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🚀</span> InspireNova Enterprises</h1>
+                <p class="tagline">Sustainable Tech Innovation Hub from Africa</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Executive Summary</h2>
+                <p>InspireNova Enterprises is a lean, innovation-driven technology company bridging digital infrastructure, sustainability, and software innovation.</p>
+                
+                <p>Headquartered in Abuja, Nigeria, we collaborate globally to create adaptive, low-carbon technology ecosystems for emerging markets — combining renewable energy integration, edge infrastructure, and advanced digital tools.</p>
+                
+                <p>Our mission is to build the foundation for sustainable digital economies through scalable, efficient, and inclusive technologies.</p>
+                
+                <p><strong>Current focus:</strong> exploring Green Edge Co-Development and sustainable data infrastructure models in partnership with global innovators.</p>
+            </div>
+
+            <div class="content-box">
+                <h2>Key Highlights</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>Global Innovation Focus:</strong> Sustainable tech solutions for emerging markets</li>
+                            <li><strong>Lean Operations:</strong> Agile, partnership-driven business model</li>
+                            <li><strong>Sustainable Infrastructure:</strong> Low-carbon digital ecosystems</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Cross-Border Collaboration:</strong> Global partnerships for local impact</li>
+                            <li><strong>Future-Ready Expertise:</strong> Edge computing and renewable integration</li>
+                            <li><strong>Climate Technology:</strong> Bridging digital and green transitions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2: Mission, Vision & Values -->
+    <section id="slide2" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🎯</span> Our Purpose</h1>
+                <p class="tagline">Mission, Vision & Core Values</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Our Mission</h2>
+                        <p>To empower emerging economies with innovative and sustainable technology that enables growth, efficiency, and resilience.</p>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Our Vision</h2>
+                        <p>To become a leading catalyst for sustainable digital transformation across Africa and global emerging markets.</p>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Our Core Values</h2>
+                        <div class="milestones">
+                            <div class="milestone">
+                                <span class="milestone-check">💡</span>
+                                <div class="milestone-text">
+                                    <strong>Innovation for Impact:</strong> Building tech that improves lives and the planet.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🤝</span>
+                                <div class="milestone-text">
+                                    <strong>Integrity & Trust:</strong> Transparent, reliable collaboration across borders.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🎯</span>
+                                <div class="milestone-text">
+                                    <strong>Agility:</strong> Staying lean and adaptable for global partnerships.
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">⭐</span>
+                                <div class="milestone-text">
+                                    <strong>Sustainability:</strong> Integrating low-carbon and energy-efficient principles into every solution.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Services & Solutions -->
+    <section id="slide3" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🛠️</span> Our Capabilities</h1>
+                <p class="tagline">Building the Sustainable Digital Backbone</p>
+            </div>
+            
+            <div class="service-cards">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Digital Infrastructure</h3>
+                    <p>Modular IT and cloud systems built for efficiency and local adaptation.</p>
+                    <ul>
+                        <li>Edge computing solutions</li>
+                        <li>Modular data systems</li>
+                        <li>Efficient cloud architecture</li>
+                        <li>Local context adaptation</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Cybersecurity & Cloud Resilience</h3>
+                    <p>Protecting digital ecosystems in critical infrastructure environments.</p>
+                    <ul>
+                        <li>Critical infrastructure protection</li>
+                        <li>Cloud security frameworks</li>
+                        <li>Resilience planning</li>
+                        <li>Compliance & governance</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Software & Platform Development</h3>
+                    <p>Scalable, AI-enhanced digital tools for enterprise and sustainability use cases.</p>
+                    <ul>
+                        <li>AI-driven applications</li>
+                        <li>Sustainability platforms</li>
+                        <li>Enterprise digital tools</li>
+                        <li>Scalable architecture</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Sustainability Integration</h3>
+                    <p>Energy monitoring, data optimization, and renewable-edge enablement.</p>
+                    <ul>
+                        <li>Energy monitoring systems</li>
+                        <li>Data optimization tools</li>
+                        <li>Renewable integration</li>
+                        <li>Carbon footprint analytics</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>Consulting & Partnerships</h3>
+                    <p>Co-developing green tech frameworks and local implementation strategies.</p>
+                    <ul>
+                        <li>Green tech framework design</li>
+                        <li>Partnership development</li>
+                        <li>Implementation strategy</li>
+                        <li>Local capacity building</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Market Analysis -->
+    <section id="slide4" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">📈</span> Market Analysis</h1>
+                <p class="tagline">Sustainable Digital Infrastructure in Emerging Markets</p>
+            </div>
+            
+            <div class="market-stats">
+                <div class="stat">
+                    <h3>African SMEs</h3>
+                    <p class="big-number">41M+</p>
+                    <p>Potential partners for sustainable solutions</p>
+                </div>
+                <div class="stat">
+                    <h3>Renewable Potential</h3>
+                    <p class="big-number">45.4%</p>
+                    <p>Growth in clean energy adoption</p>
+                </div>
+                <div class="stat">
+                    <h3>Sustainable Tech Value</h3>
+                    <p class="big-number">$40B</p>
+                    <p>Projected market by 2025</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Market Positioning</h2>
+                <p>The African digital infrastructure market is entering a new phase — where climate adaptation, renewable energy, and data growth converge. InspireNova bridges these trends by designing solutions that combine technology with sustainability.</p>
+                <p style="text-align: center; margin-top: 1rem; font-weight: 600;">🌍 Positioned at the intersection of tech growth and green transition.</p>
+            </div>
+
+            <div class="content-box">
+                <h2>Target Markets</h2>
+                <div class="customer-grid">
+                    <div class="customer">✅ Sustainable Enterprises</div>
+                    <div class="customer">✅ Green Infrastructure</div>
+                    <div class="customer">✅ Climate Tech</div>
+                    <div class="customer">✅ Renewable Energy</div>
+                    <div class="customer">✅ Public Sector Innovation</div>
+                    <div class="customer">✅ Global Partnerships</div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Market Trends</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>Climate-Tech Convergence:</strong> Digital solutions integrating with sustainability goals</li>
+                            <li><strong>Edge Infrastructure Growth:</strong> Distributed computing meeting renewable energy</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Emerging Market Focus:</strong> Global investment shifting to sustainable emerging markets</li>
+                            <li><strong>Partnership Models:</strong> Collaborative approaches to infrastructure development</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Operational Plan -->
+    <section id="slide5" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">🏢</span> Operational Plan</h1>
+                <p class="tagline">Lean Operations, Global Collaboration</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Operating Model</h2>
+                        <p><strong>HQ:</strong> Abuja, Nigeria</p>
+                        <p><strong>Collaboration Network:</strong> Distributed model with partners in Lagos and Manchester</p>
+                        <p><strong>Focus:</strong> Research, pilot studies, and networked partnerships over physical expansion</p>
+                        <p><strong>Infrastructure:</strong> Agile operations supported by cloud-based systems and remote teams</p>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Technology Infrastructure</h2>
+                        <ul>
+                            <li><strong>Cloud-First Approach:</strong> Leveraging global cloud platforms for scalability</li>
+                            <li><strong>Remote Collaboration:</strong> Advanced tools for distributed team coordination</li>
+                            <li><strong>Security Framework:</strong> Enterprise-grade protection for all operations</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Partnership Ecosystem</h2>
+                        <ul>
+                            <li><strong>Strategic Alliances:</strong> Relationships with technology and sustainability partners</li>
+                            <li><strong>Research Collaboration:</strong> Joint development with academic and innovation hubs</li>
+                            <li><strong>Implementation Network:</strong> Local partners for ground-level execution</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Quality & Impact Assurance</h2>
+                        <ul>
+                            <li>Rigorous testing of all sustainable technology solutions</li>
+                            <li>Continuous monitoring of environmental impact metrics</li>
+                            <li>Regular partner feedback and improvement cycles</li>
+                            <li>Adherence to global sustainability standards</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Risk Management -->
+    <section id="slide6" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">⚠️</span> Risk Management</h1>
+                <p class="tagline">Proactive Strategies for Sustainable Growth</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Identified Risks & Mitigation Strategies</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="content-box problem">
+                            <h3>Partnership Risk</h3>
+                            <p><strong>Overdependence on single collaborators</strong> could impact business continuity.</p>
+                            <p><strong>Mitigation:</strong> Diversified co-development strategy with multiple global partners.</p>
+                        </div>
+                        
+                        <div class="content-box problem">
+                            <h3>Market Risk</h3>
+                            <p><strong>Nascent awareness of sustainable IT infrastructure</strong> may slow adoption.</p>
+                            <p><strong>Mitigation:</strong> Thought leadership and pilot demonstrations to build market understanding.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="column">
+                        <div class="content-box problem">
+                            <h3>Scaling Risk</h3>
+                            <p><strong>Lean operations may limit execution capacity</strong> for large projects.</p>
+                            <p><strong>Mitigation:</strong> Modular team and partner network approach for flexible scaling.</p>
+                        </div>
+                        
+                        <div class="content-box problem">
+                            <h3>Technology Risk</h3>
+                            <p><strong>Rapid evolution of climate tech</strong> requires continuous adaptation.</p>
+                            <p><strong>Mitigation:</strong> Agile R&D processes and strategic partnerships with research institutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content-box">
+                <h2>Competitive Advantage</h2>
+                <div class="content-box">
+                    <h3>Sustainable Differentiation</h3>
+                    <ul>
+                        <li><strong>Integrated Sustainability:</strong> Climate tech built into core business model, not as add-on</li>
+                        <li><strong>Emerging Market Expertise:</strong> Deep understanding of African infrastructure challenges</li>
+                        <li><strong>Global-Local Balance:</strong> International standards adapted for local contexts</li>
+                        <li><strong>Partnership-Led Growth:</strong> Collaborative approach accelerates innovation and impact</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Financial Plan -->
+    <section id="slide7" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">💰</span> Financial Plan</h1>
+                <p class="tagline">Sustainable Growth & Capital Efficiency</p>
+            </div>
+            
+            <div class="content-box">
+                <h2>Revenue Streams</h2>
+                <p>Projections are structured around partnership-based projects and scalable service delivery, emphasizing efficiency and minimal overhead during the early phase.</p>
+                <div class="two-column">
+                    <div class="column">
+                        <ul>
+                            <li><strong>Consulting & Advisory:</strong> Sustainable tech implementation guidance</li>
+                            <li><strong>Platform Development:</strong> Custom software for climate and infrastructure use cases</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <ul>
+                            <li><strong>Partnership Projects:</strong> Revenue sharing from co-developed solutions</li>
+                            <li><strong>Research Grants:</strong> Funding for sustainable innovation initiatives</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Financial Projections (3-Year Outlook)</h2>
+                <div class="content-box">
+                    <h3>Projected Profit & Loss Statement</h3>
+                    <table class="financial-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Year 1 (₦)</th>
+                                <th>Year 2 (₦)</th>
+                                <th>Year 3 (₦)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Revenue</td>
+                                <td>240,000,000</td>
+                                <td>390,000,000</td>
+                                <td>540,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Cost of Services</td>
+                                <td>120,000,000</td>
+                                <td>180,000,000</td>
+                                <td>240,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Gross Profit</td>
+                                <td>120,000,000</td>
+                                <td>210,000,000</td>
+                                <td>300,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Expenses</td>
+                                <td>80,000,000</td>
+                                <td>120,000,000</td>
+                                <td>160,000,000</td>
+                            </tr>
+                            <tr style="font-weight: bold;">
+                                <td>Net Profit</td>
+                                <td>40,000,000</td>
+                                <td>90,000,000</td>
+                                <td>140,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h2>Funding Strategy & Efficiency</h2>
+                <div class="two-column">
+                    <div class="column">
+                        <div class="content-box">
+                            <h3>Capital Allocation</h3>
+                            <ul>
+                                <li><strong>R&D Investment:</strong> Focus on sustainable tech innovation</li>
+                                <li><strong>Partnership Development:</strong> Strategic alliance building</li>
+                                <li><strong>Talent Network:</strong> Access to global expertise without fixed overhead</li>
+                                <li><strong>Technology Infrastructure:</strong> Cloud-based, scalable platforms</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="content-box">
+                            <h3>Efficiency Metrics</h3>
+                            <p><strong>Capital Efficiency:</strong> Leveraging partnerships to maximize impact per capital unit</p>
+                            <p><strong>Sustainability ROI:</strong> Measuring both financial returns and environmental impact</p>
+                            <p><strong>Scalability Index:</strong> Ability to grow revenue without proportional cost increases</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Team & Contact -->
+    <section id="slide8" class="slide">
+        <div class="container">
+            <div class="hero-section">
+                <h1><span class="icon">👥</span> Team & Contact</h1>
+                <p class="tagline">Building Sustainable Futures Through Collaboration</p>
+            </div>
+            
+            <div class="two-column">
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Our Team Model</h2>
+                        <p>InspireNova is currently led by its founder, supported by a distributed network of developers and specialists across Nigeria and the UK. Our model prioritizes collaboration and expertise over internal headcount — enabling agility and partnership readiness.</p>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Expertise Network</h2>
+                        <div class="roadmap">
+                            <div class="phase active-phase">
+                                <span class="phase-icon">👤</span>
+                                <div class="phase-details">
+                                    <h3>Core Leadership</h3>
+                                    <p>Strategic direction and partnership development</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">🚀</span>
+                                <div class="phase-details">
+                                    <h3>Technical Specialists</h3>
+                                    <p>Distributed network of developers, engineers, and sustainability experts</p>
+                                </div>
+                            </div>
+                            <div class="phase">
+                                <span class="phase-icon">📚</span>
+                                <div class="phase-details">
+                                    <h3>Research Partners</h3>
+                                    <p>Academic and innovation hub collaborations for cutting-edge solutions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Partnership Focus Areas</h2>
+                        <div class="hiring-roles">
+                            <span class="role">Green Infrastructure</span>
+                            <span class="role">Climate Tech</span>
+                            <span class="role">Renewable Energy</span>
+                            <span class="role">Sustainable AI</span>
+                            <span class="role">Edge Computing</span>
+                            <span class="role">Emerging Markets</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="column">
+                    <div class="content-box">
+                        <h2>Contact Information</h2>
+                        <div class="milestones">
+                            <div class="milestone">
+                                <span class="milestone-check">🏢</span>
+                                <div class="milestone-text">
+                                    <strong>Head Office:</strong> Abuja, Nigeria
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">📞</span>
+                                <div class="milestone-text">
+                                    <strong>Phone:</strong> +234 806 694 2864
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">✉️</span>
+                                <div class="milestone-text">
+                                    <strong>Email:</strong> michquis@gmail.com
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">🌐</span>
+                                <div class="milestone-text">
+                                    <strong>Website:</strong> https://inspire-nova-enterprises.vercel.app/
+                                </div>
+                            </div>
+                            <div class="milestone">
+                                <span class="milestone-check">👤</span>
+                                <div class="milestone-text">
+                                    <strong>Founder:</strong> Marquis Abimbola Michael
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-box">
+                        <h2>Start a Collaboration</h2>
+                        <p>Interested in sustainable tech partnerships? Let's discuss co-development opportunities.</p>
+                        
+                        <!-- Collaboration Form -->
+                        <div class="contact-form" style="margin-top: 1.5rem;">
+                            <form id="collaborationForm" action="https://api.web3forms.com/submit" method="POST">
+                                <input type="hidden" name="access_key" value="e2da5857-495c-4f65-abf8-ceea174953af">
+                                <input type="hidden" name="subject" value="New Collaboration Request - InspireNova Sustainable Tech">
+                                <input type="hidden" name="from_name" value="InspireNova Sustainable Tech Presentation">
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Full Name *</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email Address *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="organization" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Organization *</label>
+                                    <input type="text" id="organization" name="organization" required>
+                                </div>
+
+                                <div style="margin-bottom: 1rem;">
+                                    <label for="partnership_type" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Partnership Interest *</label>
+                                    <select id="partnership_type" name="partnership_type" required>
+                                        <option value="">Select interest area</option>
+                                        <option value="green-infrastructure">Green Infrastructure</option>
+                                        <option value="climate-tech">Climate Technology</option>
+                                        <option value="renewable-integration">Renewable Energy Integration</option>
+                                        <option value="sustainable-ai">Sustainable AI</option>
+                                        <option value="edge-computing">Edge Computing</option>
+                                        <option value="research-collab">Research Collaboration</option>
+                                        <option value="investment">Investment Opportunity</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div style="margin-bottom: 1.5rem;">
+                                    <label for="collaboration_details" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Collaboration Details *</label>
+                                    <textarea id="collaboration_details" name="collaboration_details" rows="4" required placeholder="Please describe your organization and potential collaboration areas..."></textarea>
+                                </div>
+
+                                <button type="submit">
+                                    <span class="button-text">Discuss Partnership</span>
+                                    <span class="loading-spinner" style="display: none;">Sending...</span>
+                                </button>
+                            </form>
+
+                            <!-- Success/Error message container -->
+                            <div id="formMessage" style="margin-top: 1rem; padding: 12px; border-radius: 4px; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="conclusion">
+                <p>✅ InspireNova Enterprises is positioned at the intersection of sustainable technology and emerging markets — building the foundation for low-carbon digital economies through innovation and global collaboration.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // All JavaScript from the original template remains exactly the same
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const navDots = document.querySelectorAll('.nav-dot');
+            
+            function showSlide(slideIndex) {
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                
+                navDots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                slides[slideIndex].classList.add('active');
+                navDots[slideIndex].classList.add('active');
+            }
+            
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+            
+            document.addEventListener('keydown', (e) => {
+                const currentSlide = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+                
+                if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                    const nextSlide = (currentSlide + 1) % slides.length;
+                    showSlide(nextSlide);
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    const prevSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(prevSlide);
+                }
+            });
+            
+            showSlide(0);
+            
+            const form = document.getElementById('collaborationForm');
+            const formMessage = document.getElementById('formMessage');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const buttonText = submitButton.querySelector('.button-text');
+                    const loadingSpinner = submitButton.querySelector('.loading-spinner');
+                    
+                    buttonText.style.display = 'none';
+                    loadingSpinner.style.display = 'inline';
+                    submitButton.disabled = true;
+                    
+                    const formData = new FormData(form);
+                    
+                    fetch(form.action, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            formMessage.textContent = 'Thank you! Your collaboration request has been submitted successfully.';
+                            formMessage.className = 'success';
+                            formMessage.style.display = 'block';
+                            form.reset();
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        formMessage.textContent = 'Sorry, there was an error submitting your request. Please try again or contact us directly.';
+                        formMessage.className = 'error';
+                        formMessage.style.display = 'block';
+                    })
+                    .finally(() => {
+                        buttonText.style.display = 'inline';
+                        loadingSpinner.style.display = 'none';
+                        submitButton.disabled = false;
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
