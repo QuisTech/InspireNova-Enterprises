@@ -437,24 +437,27 @@
     </div>
   </header>
 
-  <!-- ===== HERO SECTION ===== -->
-  <section class="portfolio-hero" id="home">
-    <div class="container">
-      <h1>Senior Frontend Developer</h1>
-      <p>React & Next.js Specialist | TypeScript Expert | Building Scalable, User-Centric Web Applications</p>
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-light">View My Work</a>
-        <a href="#contact" class="btn btn-outline-light">Contact Me</a>
-        <a href="assets/cv/frontend-cv.pdf" class="btn btn-outline-light" download>
-          <i class="fas fa-download"></i> Download CV
-        </a>
-        <!-- Generate Button - Only visible in developer mode -->
-            <a href="#" id="generateCvBtn" class="btn btn-developer" style="display: none;">
-                <i class="fas fa-file-pdf"></i> Generate CV
-            </a>
-      </div>
+<!-- ===== HERO SECTION ===== -->
+<section class="portfolio-hero" id="home">
+  <div class="container">
+    <h1>Senior Frontend Developer</h1>
+    <p>React & Next.js Specialist | TypeScript Expert | Building Scalable, User-Centric Web Applications</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-light">View My Work</a>
+      <a href="#contact" class="btn btn-outline-light">Contact Me</a>
+      
+      <!-- NEW: Dynamic CV button for everyone -->
+      <button id="dynamicCvBtn" class="btn btn-outline-light">
+        <i class="fas fa-download"></i> Download CV
+      </button>
+      
+      <!-- Developer button - Only visible in developer mode -->
+      <a href="#" id="generateCvBtn" class="btn btn-developer" style="display: none;">
+        <i class="fas fa-file-pdf"></i> Generate CV (Dev)
+      </a>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ===== SKILLS SECTION ===== -->
   <section class="about section-dark" id="skills">
@@ -1009,7 +1012,7 @@
             </div>
             <div>
               <h4>Email</h4>
-              <p>michquis@gmail.com</p>
+              <p>marquis@inspirenova.io</p>
             </div>
           </div>
 <div class="contact-item fade-in">
@@ -2123,7 +2126,408 @@ Generated from portfolio on ${new Date().toLocaleDateString()}
             new CVGenerator();
         }
     })();
-    </script>
+
+// ===== CV DOWNLOAD FOR ALL USERS =====
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadBtn = document.getElementById('dynamicCvBtn');
+  
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      
+      // Show loading state
+      const originalHTML = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+      downloadBtn.disabled = true;
+      
+      try {
+        // Create CV data from current page
+        const cvData = parsePageDataForCV();
+        
+        // Generate and download PDF
+        await generatePDFForAllUsers(cvData);
+        
+      } catch (error) {
+        console.error('Error generating CV:', error);
+        alert('Sorry, there was an error generating your CV. Please try again.');
+      } finally {
+        // Restore button state
+        downloadBtn.innerHTML = originalHTML;
+        downloadBtn.disabled = false;
+      }
+    });
+  }
+});
+
+function parsePageDataForCV() {
+  return {
+    personalInfo: {
+      name: 'Michael Marquis',
+      title: document.querySelector('.portfolio-hero h1')?.textContent || 'Senior Frontend Developer',
+      summary: document.querySelector('.portfolio-hero p')?.textContent || 
+              'React & Next.js Specialist | TypeScript Expert | Building Scalable, User-Centric Web Applications',
+      location: 'Abuja, Nigeria',
+      visaStatus: 'UK Global Talent Visa Applicant'
+    },
+    skills: getSkillsFromPage(),
+    projects: getProjectsFromPage(),
+    experience: getExperienceFromPage(),
+    achievements: getAchievementsFromPage(), // Add this
+    contact: getContactInfoFromPage()
+  };
+}
+
+function getSkillsFromPage() {
+  const skills = [];
+  
+  // Get skills from the skills matrix
+  const skillCategories = document.querySelectorAll('.skill-category');
+  
+  skillCategories.forEach(category => {
+    const categoryName = category.querySelector('h4')?.textContent || 'Skills';
+    const skillLevels = category.querySelectorAll('.skill-level');
+    
+    skillLevels.forEach(item => {
+      const skillName = item.querySelector('span')?.textContent || '';
+      const progressBar = item.querySelector('.skill-progress');
+      const progress = progressBar ? progressBar.style.width : '80%';
+      
+      if (skillName) {
+        skills.push({
+          name: skillName,
+          level: progress,
+          category: categoryName
+        });
+      }
+    });
+  });
+  
+  // Fallback if no skills found
+  if (skills.length === 0) {
+    return [
+      { name: 'React & Next.js', level: '95%', category: 'Core Technologies' },
+      { name: 'TypeScript', level: '90%', category: 'Core Technologies' },
+      { name: 'JavaScript (ES6+)', level: '95%', category: 'Core Technologies' },
+      { name: 'HTML5 & CSS3', level: '98%', category: 'Core Technologies' },
+      { name: 'Redux & State Management', level: '88%', category: 'Tools & Libraries' },
+      { name: 'Testing (Jest, React Testing Library)', level: '85%', category: 'Tools & Libraries' },
+      { name: 'Webpack & Vite', level: '80%', category: 'Tools & Libraries' },
+      { name: 'Git & GitHub', level: '92%', category: 'Tools & Libraries' }
+    ];
+  }
+  
+  return skills;
+}
+
+function getProjectsFromPage() {
+  const projects = [];
+  const projectCards = document.querySelectorAll('.project-card');
+  
+  projectCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const description = card.querySelector('p')?.textContent || '';
+    const tags = Array.from(card.querySelectorAll('.project-tag')).map(tag => tag.textContent);
+    
+    // Get metrics
+    const metrics = [];
+    const metricElements = card.querySelectorAll('.metric');
+    metricElements.forEach(metric => {
+      const value = metric.querySelector('.metric-value')?.textContent || '';
+      const label = metric.querySelector('.metric-label')?.textContent || '';
+      if (value && label) {
+        metrics.push({ value, label });
+      }
+    });
+    
+    // Get links
+    const githubLink = card.querySelector('a[href*="github"]')?.href;
+    const demoLink = card.querySelector('a.btn-primary')?.href;
+    
+    if (title) {
+      projects.push({
+        title,
+        description,
+        technologies: tags,
+        metrics, // Include metrics
+        github: githubLink,
+        demo: demoLink
+      });
+    }
+  });
+  
+  return projects; // Return ALL projects, not just 5
+}
+
+function getExperienceFromPage() {
+  const experiences = [];
+  const experienceCards = document.querySelectorAll('.experience-card');
+  
+  experienceCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const company = card.querySelector('h4')?.textContent || '';
+    const points = Array.from(card.querySelectorAll('li')).map(li => li.textContent);
+    
+    if (title) {
+      experiences.push({
+        title,
+        company: company || 'Various Projects',
+        period: 'Current',
+        achievements: points
+      });
+    }
+  });
+  
+  return experiences;
+}
+
+function getContactInfoFromPage() {
+  const contact = {};
+  const contactItems = document.querySelectorAll('.contact-item');
+  
+  contactItems.forEach(item => {
+    const type = item.querySelector('h4')?.textContent.toLowerCase() || '';
+    const value = item.querySelector('p')?.textContent || '';
+    
+    if (type && value) {
+      if (type.includes('email')) contact.email = value;
+      if (type.includes('linkedin')) contact.linkedin = value;
+      if (type.includes('github')) contact.github = value;
+      if (type.includes('location')) contact.location = value;
+    }
+  });
+  
+  return contact;
+}
+
+function getAchievementsFromPage() {
+  const achievements = [];
+  const achievementCards = document.querySelectorAll('.achievement-card');
+  
+  achievementCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const description = card.querySelector('p')?.textContent || '';
+    
+    if (title) {
+      achievements.push({
+        title,
+        description
+      });
+    }
+  });
+  
+  // Fallback if no achievements found
+  if (achievements.length === 0) {
+    return [
+      {
+        title: 'React Ecosystem',
+        description: 'Expert in React, Next.js, Redux, and modern hooks. Specialized in building scalable component architectures.'
+      },
+      {
+        title: 'Performance Optimization',
+        description: 'Proven track record of optimizing web applications for speed, accessibility, and Core Web Vitals excellence.'
+      },
+      {
+        title: 'Responsive Design',
+        description: 'Creating beautiful, functional interfaces that work seamlessly across all devices and screen sizes.'
+      }
+    ];
+  }
+  
+  return achievements;
+}
+
+
+// Main PDF generation function
+async function generatePDFForAllUsers(data) {
+  return new Promise((resolve, reject) => {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      const pageWidth = doc.internal.pageSize.width;
+      const margin = 20;
+      let y = 20;
+      
+      // Header with your brand color
+      doc.setFillColor(219, 74, 43); // Your primary color
+      doc.rect(0, 0, pageWidth, 40, 'F');
+      
+      // Name in white
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text(data.personalInfo.name, margin, 25);
+      
+      // Title
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text(data.personalInfo.title, margin, 33);
+      
+      y = 50;
+      
+      // Contact info
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(10);
+      doc.text(`Email: ${data.contact.email || 'marquis@inspirenova.io'}`, margin, y);
+      doc.text(`LinkedIn: ${data.contact.linkedin || 'linkedin.com/in/macmarquis'}`, margin + 70, y);
+      doc.text(`GitHub: ${data.contact.github || 'github.com/QuisTech'}`, margin, y + 5);
+      doc.text(`Location: ${data.contact.location || 'Abuja, Nigeria'}`, margin + 70, y + 5);
+      
+      y += 20;
+      
+      // Summary
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PROFESSIONAL SUMMARY', margin, y);
+      y += 7;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const summaryLines = doc.splitTextToSize(data.personalInfo.summary, pageWidth - (margin * 2));
+      doc.text(summaryLines, margin, y);
+      y += (summaryLines.length * 5) + 12;
+      
+      // Skills
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('TECHNICAL SKILLS', margin, y);
+      y += 10;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      
+      // In the skills section, replace with this:
+data.skills.forEach(skill => {
+  if (y > 250) {
+    doc.addPage();
+    y = 20;
+  }
+  
+  // Skill name with percentage
+  doc.text(`• ${skill.name} (${skill.level})`, margin, y);
+  y += 5;
+  
+  // Optional: Add a visual skill bar
+  if (skill.level && skill.level.includes('%')) {
+    const percent = parseInt(skill.level);
+    const barWidth = 40;
+    const filledWidth = (percent / 100) * barWidth;
+    
+    doc.setDrawColor(200, 200, 200);
+    doc.rect(margin + 100, y - 4, barWidth, 3);
+    
+    doc.setFillColor(219, 74, 43); // Your brand color
+    doc.rect(margin + 100, y - 4, filledWidth, 3, 'F');
+  }
+  
+  y += 8;
+});
+      
+      // Experience
+      if (data.experience.length > 0) {
+        if (y > 220) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('EXPERIENCE', margin, y);
+        y += 10;
+        
+        data.experience.forEach(exp => {
+          if (y > 250) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.text(exp.title, margin, y);
+          
+          doc.setFont('helvetica', 'normal');
+          doc.text(`${exp.company} | ${exp.period}`, margin, y + 5);
+          y += 12;
+          
+          doc.setFontSize(9);
+          exp.achievements.forEach(achievement => {
+            if (y > 270) {
+              doc.addPage();
+              y = 20;
+            }
+            const lines = doc.splitTextToSize('• ' + achievement, pageWidth - (margin * 2) - 10);
+            doc.text(lines, margin + 5, y);
+            y += lines.length * 4 + 2;
+          });
+          y += 5;
+        });
+      }
+      
+      // Projects
+      if (data.projects.length > 0) {
+        if (y > 220) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('KEY PROJECTS', margin, y);
+        y += 10;
+        
+        data.projects.forEach(project => {
+          if (y > 250) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.text(project.title, margin, y);
+          y += 7;
+          
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          
+          const descLines = doc.splitTextToSize(project.description, pageWidth - (margin * 2));
+          doc.text(descLines, margin, y);
+          y += descLines.length * 4 + 3;
+          
+          if (project.technologies.length > 0) {
+            doc.text('Technologies: ' + project.technologies.join(', '), margin, y);
+            y += 5;
+          }
+          
+          y += 8;
+        });
+      }
+      
+      // Footer with generation date
+      const totalPages = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(128, 128, 128);
+        doc.text(
+          `Generated from portfolio on ${new Date().toLocaleDateString()} | Page ${i} of ${totalPages}`,
+          pageWidth / 2,
+          doc.internal.pageSize.height - 10,
+          { align: 'center' }
+        );
+      }
+      
+      // Save the PDF
+      const fileName = `Michael_Marquis_CV_${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(fileName);
+      resolve();
+      
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      reject(error);
+    }
+  });
+}
+</script>
 
 
 

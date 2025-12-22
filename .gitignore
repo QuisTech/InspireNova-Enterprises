@@ -1,0 +1,9 @@
+# JetBrains IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# OS files
+.DS_Store
+Thumbs.db

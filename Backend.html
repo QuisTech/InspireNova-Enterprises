@@ -471,13 +471,16 @@
       <div class="hero-actions">
         <a href="#projects" class="btn btn-light">View My Work</a>
         <a href="#contact" class="btn btn-outline-light">Contact Me</a>
-        <a href="assets/cv/backend-cv.pdf" class="btn btn-outline-light" download>
+        
+        <!-- Add this line (same as frontend) -->
+        <button id="dynamicCvBtn" class="btn btn-outline-light">
           <i class="fas fa-download"></i> Download CV
+        </button>
+        
+        <!-- Developer button - Only visible in developer mode -->
+        <a href="#" id="generateCvBtn" class="btn btn-developer" style="display: none;">
+          <i class="fas fa-file-pdf"></i> Generate CV (Dev)
         </a>
-        <!-- Generate Button - Only visible in developer mode -->
-            <a href="#" id="generateCvBtn" class="btn btn-developer" style="display: none;">
-                <i class="fas fa-file-pdf"></i> Generate CV
-            </a>
       </div>
     </div>
   </section>
@@ -540,7 +543,7 @@
     </div>
   </section>
 
-==== PROJECTS SECTION ===== -->
+<!-- ===== PROJECTS SECTION ===== -->
 <section class="projects section-dark" id="projects">
   <div class="container">
     <h2 class="text-center">Full-Stack Projects</h2>
@@ -1081,7 +1084,7 @@
             </div>
             <div>
               <h4>Email</h4>
-              <p>michquis@gmail.com</p>
+              <p>marquis@inspirenova.io</p>
             </div>
           </div>
           <div class="contact-item fade-in">
@@ -1874,7 +1877,7 @@ if (isDevMode || hasDevCookie) {
                     // Fallback contact info
                     if (Object.keys(contact).length === 0) {
                         return {
-                            email: 'michquis@gmail.com',
+                            email: 'marquis@inspirenova.io',
                             linkedin: 'linkedin.com/in/macmarquis',
                             github: 'github.com/QuisTech',
                             location: 'Abuja, Nigeria'
@@ -2195,7 +2198,443 @@ Generated from portfolio on ${new Date().toLocaleDateString()}
             new CVGenerator();
         }
     })();
-    </script>
+
+// ===== CV DOWNLOAD FOR ALL USERS =====
+document.addEventListener('DOMContentLoaded', function() {
+  const downloadBtn = document.getElementById('dynamicCvBtn');
+  
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      
+      // Show loading state
+      const originalHTML = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+      downloadBtn.disabled = true;
+      
+      try {
+        // Create CV data from current page
+        const cvData = parsePageDataForCV();
+        
+        // Generate and download PDF
+        await generatePDFForAllUsers(cvData);
+        
+      } catch (error) {
+        console.error('Error generating CV:', error);
+        alert('Sorry, there was an error generating your CV. Please try again.');
+      } finally {
+        // Restore button state
+        downloadBtn.innerHTML = originalHTML;
+        downloadBtn.disabled = false;
+      }
+    });
+  }
+});
+
+function parsePageDataForCV() {
+  return {
+    personalInfo: {
+      name: 'Michael Marquis',
+      title: document.querySelector('.portfolio-hero h1')?.textContent || 'Senior Backend Developer',
+      summary: document.querySelector('.portfolio-hero p')?.textContent || 
+              'Python & Flask Specialist | API Architecture | Database Design | Scalable Systems',
+      location: 'Abuja, Nigeria',
+      visaStatus: 'UK Global Talent Visa Applicant'
+    },
+    skills: getSkillsFromPage(),
+    projects: getProjectsFromPage(),
+    experience: getExperienceFromPage(),
+    achievements: getAchievementsFromPage(),
+    contact: getContactInfoFromPage()
+  };
+}
+
+function getSkillsFromPage() {
+  const skills = [];
+  
+  // Get skills from the skills matrix
+  const skillCategories = document.querySelectorAll('.skill-category');
+  
+  skillCategories.forEach(category => {
+    const categoryName = category.querySelector('h4')?.textContent || 'Skills';
+    const skillLevels = category.querySelectorAll('.skill-level');
+    
+    skillLevels.forEach(item => {
+      const skillName = item.querySelector('span')?.textContent || '';
+      const progressBar = item.querySelector('.skill-progress');
+      const progress = progressBar ? progressBar.style.width : '80%';
+      
+      if (skillName) {
+        skills.push({
+          name: skillName,
+          level: progress,
+          category: categoryName
+        });
+      }
+    });
+  });
+  
+  // Backend-specific fallback skills
+  if (skills.length === 0) {
+    return [
+      { name: 'Python & Flask', level: '95%', category: 'Backend Technologies' },
+      { name: 'RESTful API Design', level: '92%', category: 'Backend Technologies' },
+      { name: 'Database Design (SQL/NoSQL)', level: '90%', category: 'Backend Technologies' },
+      { name: 'Authentication & Security', level: '88%', category: 'Backend Technologies' },
+      { name: 'Docker & Containerization', level: '85%', category: 'Infrastructure & Tools' },
+      { name: 'PostgreSQL & MongoDB', level: '87%', category: 'Infrastructure & Tools' },
+      { name: 'AWS & Cloud Services', level: '80%', category: 'Infrastructure & Tools' },
+      { name: 'CI/CD & DevOps', level: '82%', category: 'Infrastructure & Tools' }
+    ];
+  }
+  
+  return skills;
+}
+
+function getProjectsFromPage() {
+  const projects = [];
+  const projectCards = document.querySelectorAll('.project-card');
+  
+  projectCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const description = card.querySelector('p')?.textContent || '';
+    const tags = Array.from(card.querySelectorAll('.project-tag')).map(tag => tag.textContent);
+    
+    // Get metrics
+    const metrics = [];
+    const metricElements = card.querySelectorAll('.metric');
+    metricElements.forEach(metric => {
+      const value = metric.querySelector('.metric-value')?.textContent || '';
+      const label = metric.querySelector('.metric-label')?.textContent || '';
+      if (value && label) {
+        metrics.push({ value, label });
+      }
+    });
+    
+    // Get links
+    const githubLink = card.querySelector('a[href*="github"]')?.href;
+    const demoLink = card.querySelector('a.btn-primary')?.href;
+    
+    if (title) {
+      projects.push({
+        title,
+        description,
+        technologies: tags,
+        metrics,
+        github: githubLink,
+        demo: demoLink
+      });
+    }
+  });
+  
+  return projects;
+}
+
+function getExperienceFromPage() {
+  const experiences = [];
+  const experienceCards = document.querySelectorAll('.experience-card');
+  
+  experienceCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const company = card.querySelector('h4')?.textContent || '';
+    const points = Array.from(card.querySelectorAll('li')).map(li => li.textContent);
+    
+    if (title) {
+      experiences.push({
+        title,
+        company: company || 'Various Projects',
+        period: 'Current',
+        achievements: points
+      });
+    }
+  });
+  
+  return experiences;
+}
+
+function getContactInfoFromPage() {
+  const contact = {};
+  const contactItems = document.querySelectorAll('.contact-item');
+  
+  contactItems.forEach(item => {
+    const type = item.querySelector('h4')?.textContent.toLowerCase() || '';
+    const value = item.querySelector('p')?.textContent || '';
+    
+    if (type && value) {
+      if (type.includes('email')) contact.email = value;
+      if (type.includes('linkedin')) contact.linkedin = value;
+      if (type.includes('github')) contact.github = value;
+      if (type.includes('location')) contact.location = value;
+    }
+  });
+  
+  return contact;
+}
+
+function getAchievementsFromPage() {
+  const achievements = [];
+  const achievementCards = document.querySelectorAll('.achievement-card');
+  
+  achievementCards.forEach(card => {
+    const title = card.querySelector('h3')?.textContent || '';
+    const description = card.querySelector('p')?.textContent || '';
+    
+    if (title) {
+      achievements.push({
+        title,
+        description
+      });
+    }
+  });
+  
+  // Backend-specific fallback achievements
+  if (achievements.length === 0) {
+    return [
+      {
+        title: 'Python & Flask Expertise',
+        description: 'Expert in building scalable Python APIs with Flask, SQLAlchemy, and modern backend patterns. Specialized in AI integration and complex business logic.'
+      },
+      {
+        title: 'Database Architecture',
+        description: 'Proven expertise in database design, optimization, and management across SQL and NoSQL technologies with focus on performance and scalability.'
+      },
+      {
+        title: 'API Security',
+        description: 'Comprehensive security implementation including authentication, authorization, rate limiting, and data protection for production applications.'
+      }
+    ];
+  }
+  
+  return achievements;
+}
+
+// Main PDF generation function for backend portfolio
+async function generatePDFForAllUsers(data) {
+  return new Promise((resolve, reject) => {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      const pageWidth = doc.internal.pageSize.width;
+      const margin = 20;
+      let y = 20;
+      
+      // Header with your brand color
+      doc.setFillColor(219, 74, 43); // Your primary color
+      doc.rect(0, 0, pageWidth, 40, 'F');
+      
+      // Name in white
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text(data.personalInfo.name, margin, 25);
+      
+      // Title
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.text(data.personalInfo.title, margin, 33);
+      
+      y = 50;
+      
+      // Contact info
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(10);
+      doc.text(`Email: ${data.contact.email || 'michquis@gmail.com'}`, margin, y);
+      doc.text(`LinkedIn: ${data.contact.linkedin || 'linkedin.com/in/macmarquis'}`, margin + 70, y);
+      doc.text(`GitHub: ${data.contact.github || 'github.com/QuisTech'}`, margin, y + 5);
+      doc.text(`Location: ${data.contact.location || 'Abuja, Nigeria'}`, margin + 70, y + 5);
+      
+      y += 20;
+      
+      // Summary
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PROFESSIONAL SUMMARY', margin, y);
+      y += 7;
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const summaryLines = doc.splitTextToSize(data.personalInfo.summary, pageWidth - (margin * 2));
+      doc.text(summaryLines, margin, y);
+      y += (summaryLines.length * 5) + 12;
+      
+      // Skills with visual bars
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('TECHNICAL SKILLS', margin, y);
+      y += 10;
+      
+      data.skills.forEach(skill => {
+        if (y > 250) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        // Skill name with percentage
+        doc.setFontSize(10);
+        doc.text(`• ${skill.name} (${skill.level})`, margin, y);
+        
+        // Visual skill bar for backend
+        if (skill.level && skill.level.includes('%')) {
+          const percent = parseInt(skill.level);
+          const barWidth = 40;
+          const filledWidth = (percent / 100) * barWidth;
+          
+          doc.setDrawColor(200, 200, 200);
+          doc.rect(margin + 100, y - 4, barWidth, 3);
+          
+          doc.setFillColor(219, 74, 43);
+          doc.rect(margin + 100, y - 4, filledWidth, 3, 'F');
+        }
+        
+        y += 8;
+      });
+      
+      // Architecture Experience
+      if (data.experience.length > 0) {
+        if (y > 220) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('SYSTEM ARCHITECTURE EXPERTISE', margin, y);
+        y += 10;
+        
+        data.experience.forEach(exp => {
+          if (y > 250) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.text(exp.title, margin, y);
+          
+          doc.setFont('helvetica', 'normal');
+          doc.text(`${exp.company} | ${exp.period}`, margin, y + 5);
+          y += 12;
+          
+          doc.setFontSize(9);
+          exp.achievements.forEach(achievement => {
+            if (y > 270) {
+              doc.addPage();
+              y = 20;
+            }
+            const lines = doc.splitTextToSize('• ' + achievement, pageWidth - (margin * 2) - 10);
+            doc.text(lines, margin + 5, y);
+            y += lines.length * 4 + 2;
+          });
+          y += 5;
+        });
+      }
+      
+      // Backend Projects
+      if (data.projects.length > 0) {
+        if (y > 220) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BACKEND PROJECTS', margin, y);
+        y += 10;
+        
+        data.projects.forEach(project => {
+          if (y > 250) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.text(project.title, margin, y);
+          y += 7;
+          
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          
+          const descLines = doc.splitTextToSize(project.description, pageWidth - (margin * 2));
+          doc.text(descLines, margin, y);
+          y += descLines.length * 4 + 3;
+          
+          if (project.technologies.length > 0) {
+            doc.text('Technologies: ' + project.technologies.join(', '), margin, y);
+            y += 5;
+          }
+          
+          // Show backend-specific metrics
+          if (project.metrics && project.metrics.length > 0) {
+            const metricsText = project.metrics.map(m => `${m.value} ${m.label}`).join(' | ');
+            doc.text('Performance: ' + metricsText, margin, y);
+            y += 5;
+          }
+          
+          y += 8;
+        });
+      }
+      
+      // Backend Specializations
+      if (data.achievements.length > 0) {
+        if (y > 220) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BACKEND SPECIALIZATIONS', margin, y);
+        y += 10;
+        
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        
+        data.achievements.forEach(achievement => {
+          if (y > 270) {
+            doc.addPage();
+            y = 20;
+          }
+          
+          doc.setFont('helvetica', 'bold');
+          doc.text(achievement.title, margin, y);
+          y += 5;
+          
+          doc.setFont('helvetica', 'normal');
+          const descLines = doc.splitTextToSize(achievement.description, pageWidth - (margin * 2));
+          doc.text(descLines, margin, y);
+          y += descLines.length * 4 + 8;
+        });
+      }
+      
+      // Footer
+      const totalPages = doc.internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        doc.setPage(i);
+        doc.setFontSize(8);
+        doc.setTextColor(128, 128, 128);
+        doc.text(
+          `Backend Portfolio CV | Generated on ${new Date().toLocaleDateString()} | Page ${i} of ${totalPages}`,
+          pageWidth / 2,
+          doc.internal.pageSize.height - 10,
+          { align: 'center' }
+        );
+      }
+      
+      // Save the PDF
+      const fileName = `Michael_Marquis_Backend_CV_${new Date().toISOString().split('T')[0]}.pdf`;
+      doc.save(fileName);
+      resolve();
+      
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      reject(error);
+    }
+  });
+}
+
+</script>
 
 
 </body>
