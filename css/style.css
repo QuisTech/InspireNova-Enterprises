@@ -611,6 +611,127 @@ section {
   color: var(--text-light);
 }
 
+/* ===== BLOG SECTION ===== */
+.blog {
+  background-color: var(--bg-darker);
+  color: var(--text-light);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.blog-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.blog-body {
+  padding: 25px;
+}
+
+.blog-body h3 {
+  color: var(--primary);
+}
+
+.blog-body p {
+  color: var(--text-light);
+}
+
+/* ===== PORTFOLIO SECTION ===== */
+.portfolio {
+    background-color: var(--bg-darker);
+    color: var(--text-light);
+    padding: 80px 0;
+}
+
+.portfolio .intro {
+    max-width: 700px;
+    margin: 20px auto;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.portfolio .section-note {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-top: 10px;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.portfolio-card {
+    background: var(--bg-card);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border-color: var(--primary);
+}
+
+.portfolio-body {
+    padding: 30px;
+}
+
+.portfolio-body h3 {
+    color: var(--text-light);
+    margin-top: 0;
+}
+
+.portfolio-body p {
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.portfolio-body strong {
+    color: var(--text-light);
+}
+
+.portfolio-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.portfolio-actions .btn {
+    flex: 1;
+    text-align: center;
+}
+
+.portfolio .cta-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.portfolio .profile-note {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* ===== CONTACT SECTION ===== */
+.contact {
+  padding: 80px 0;
+  color: var(--text-light);
+}
+
 /* ===== CONTACT SECTION ===== */
 .contact {
   padding: 80px 0;
