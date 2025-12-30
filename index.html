@@ -1032,103 +1032,193 @@
   </div>
 </section>
 
-  <!-- ===== CONTACT SECTION ===== -->
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2>Contact Us</h2>
-      <p class="intro text-center" style="max-width: 700px; margin: 0 auto 40px;">
-        Let's Build Something Great Together. Whether you're looking for an IT partner, need support with cybersecurity, or want to build your next app — InspireNova is ready to help.
-      </p>
-      <div class="contact-grid">
-        <div class="contact-info">
-          <div class="contact-item fade-in">
-            <div class="contact-icon">
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div>
-              <h4>Head Office</h4>
-              <p>Abuja, Nigeria</p>
-            </div>
+<!-- ===== CONTACT SECTION ===== -->
+<section class="contact" id="contact">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <p class="intro text-center" style="max-width: 700px; margin: 0 auto 40px;">
+      Let's Build Something Great Together. Whether you're looking for an IT partner, need support with cybersecurity, or want to build your next app — InspireNova is ready to help.
+    </p>
+    
+    <div class="contact-grid">
+      <!-- LEFT COLUMN: CONTACT INFO (KEEPING ORIGINAL) -->
+      <div class="contact-info">
+        <div class="contact-item fade-in">
+          <div class="contact-icon">
+            <i class="fas fa-map-marker-alt"></i>
           </div>
-          <div class="contact-item fade-in">
-            <div class="contact-icon">
-              <i class="fas fa-phone"></i>
-            </div>
-            <div>
-              <h4>Phone</h4>
-              <p>+234 806 694 2864</p>
-            </div>
-          </div>
-          <div class="contact-item fade-in">
-            <div class="contact-icon">
-              <i class="fas fa-envelope"></i>
-            </div>
-            <div>
-              <h4>Email</h4>
-              <p>info@inspirenova.io</p>
-            </div>
-          </div>
-          <div class="contact-item fade-in">
-            <div class="contact-icon">
-              <i class="fas fa-globe"></i>
-            </div>
-            <div>
-              <h4>Website</h4>
-              <p>www.inspirenova.io</p>
-            </div>
-          </div>
-          <div class="hero-actions" style="margin-top: 20px;">
-            <a href="#" class="btn btn-primary">Schedule a Consultation</a>
-            <a href="#" class="btn btn-outline">Partner with Us</a>
+          <div>
+            <h4>Head Office</h4>
+            <p>Abuja, Nigeria</p>
           </div>
         </div>
-        <div class="contact-form fade-in">
-          <form action="https://api.web3forms.com/submit" method="POST">
-  <!-- REQUIRED hidden input -->
-  <input type="hidden" name="access_key" value="e2da5857-495c-4f65-abf8-ceea174953af">
-
-  <div class="form-group">
-    <label for="name">Full Name</label>
-    <input type="text" id="name" name="name" class="form-control" required>
-  </div>
-
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" class="form-control" required>
-  </div>
-
-  <div class="form-group">
-    <label for="phone">Phone Number</label>
-    <input type="tel" id="phone" name="phone" class="form-control">
-  </div>
-
-  <div class="form-group">
-    <label for="service">Service Interested In</label>
-    <select id="service" name="service" class="form-control">
-      <option value="">Select a service</option>
-      <option value="it">IT & Infrastructure</option>
-      <option value="cybersecurity">Cybersecurity</option>
-      <option value="development">App & Website Development</option>
-      <option value="consulting">Digital Transformation Consulting</option>
-      <option value="hardware">Hardware & Software Sales</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="message">Message</label>
-    <textarea id="message" name="message" class="form-control" rows="5"></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
-</form>
-
-<!-- This empty div will hold the success/error message -->
-<div id="formMessage" class="form-message"></div>
-
+        <div class="contact-item fade-in">
+          <div class="contact-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div>
+            <h4>Phone</h4>
+            <p>+234 806 694 2864</p>
+          </div>
+        </div>
+        <div class="contact-item fade-in">
+          <div class="contact-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div>
+            <h4>Email</h4>
+            <p>info@inspirenova.io</p>
+          </div>
+        </div>
+        <div class="contact-item fade-in">
+          <div class="contact-icon">
+            <i class="fas fa-globe"></i>
+          </div>
+          <div>
+            <h4>Website</h4>
+            <p>www.inspirenova.io</p>
+          </div>
+        </div>
+        <div class="hero-actions" style="margin-top: 20px;">
+          <a href="#" class="btn btn-primary">Schedule a Consultation</a>
+          <a href="#" class="btn btn-outline">Partner with Us</a>
         </div>
       </div>
+      
+      <!-- RIGHT COLUMN: ENHANCED FORM -->
+      <div class="contact-form fade-in">
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <!-- REQUIRED hidden input -->
+          <input type="hidden" name="access_key" value="e2da5857-495c-4f65-abf8-ceea174953af">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Full Name *</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" class="form-control">
+            </div>
+            
+            <div class="form-group">
+              <label for="company">Company / Organization</label>
+              <input type="text" id="company" name="company" class="form-control">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="service">Service Interested In *</label>
+            <select id="service" name="service" class="form-control" required>
+              <option value="">Select a service</option>
+              
+              <!-- Software-First Services -->
+              <optgroup label="Software Solutions (Our 2026 Focus)">
+                <option value="custom-software">Custom Software Development</option>
+                <option value="web-app">Web Application Development</option>
+                <option value="mobile-app">Mobile App Development</option>
+                <option value="desktop-software">Desktop Software Solutions</option>
+                <option value="api-integration">API & System Integration</option>
+              </optgroup>
+              
+              <!-- IT & Infrastructure -->
+              <optgroup label="IT & Digital Infrastructure">
+                <option value="it-support">Managed IT Support</option>
+                <option value="cloud-services">Cloud Migration & Hosting</option>
+                <option value="network-infra">Network Infrastructure</option>
+                <option value="data-backup">Data Backup & Recovery</option>
+              </optgroup>
+              
+              <!-- Cybersecurity -->
+              <optgroup label="Cybersecurity Solutions">
+                <option value="security-assessment">Security Assessment</option>
+                <option value="cyber-protection">Endpoint & Cloud Protection</option>
+                <option value="compliance">Compliance & Audit</option>
+                <option value="security-training">Employee Security Training</option>
+              </optgroup>
+              
+              <!-- Digital Transformation -->
+              <optgroup label="Digital Transformation">
+                <option value="digital-strategy">Digital Strategy Consulting</option>
+                <option value="process-automation">Process Automation</option>
+                <option value="ai-integration">AI Integration</option>
+                <option value="tech-advisory">Technology Advisory</option>
+              </optgroup>
+              
+              <!-- Hardware & Products -->
+              <optgroup label="Technology Products">
+                <option value="hardware-sales">Hardware Procurement</option>
+                <option value="software-licensing">Software Licensing</option>
+                <option value="device-setup">Device Setup & Support</option>
+                <option value="maintenance">Maintenance Services</option>
+              </optgroup>
+              
+              <!-- Other -->
+              <option value="other">Other / Not Sure</option>
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="budget">Project Budget Range</label>
+              <select id="budget" name="budget" class="form-control">
+                <option value="">Select budget range</option>
+                <option value="under-500k">Under ₦500,000</option>
+                <option value="500k-2m">₦500,000 - ₦2 Million</option>
+                <option value="2m-5m">₦2 Million - ₦5 Million</option>
+                <option value="5m-10m">₦5 Million - ₦10 Million</option>
+                <option value="10m-plus">₦10 Million+</option>
+                <option value="consultation">Need consultation first</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="timeline">Project Timeline</label>
+              <select id="timeline" name="timeline" class="form-control">
+                <option value="">Select timeline</option>
+                <option value="immediate">Immediate Start</option>
+                <option value="1-month">Within 1 Month</option>
+                <option value="1-3-months">1-3 Months</option>
+                <option value="3-6-months">3-6 Months</option>
+                <option value="6-plus-months">6+ Months</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message">Project Details / Message *</label>
+            <textarea id="message" name="message" class="form-control" rows="5" 
+                      placeholder="Tell us about your project, requirements, challenges, or any specific needs..." 
+                      required></textarea>
+          </div>
+          
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary submit-btn" style="width: 100%;">
+            <i class="fas fa-paper-plane"></i>
+            Send Message & Get Free Consultation
+          </button>
+          
+          <p class="form-note">
+            <i class="fas fa-shield-alt"></i>
+            Your information is secure. We'll respond within 24 hours.
+          </p>
+        </form>
+        
+        <!-- Form Message Display -->
+        <div id="formMessage" class="form-message"></div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">

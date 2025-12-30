@@ -124,7 +124,55 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
+// Form submission handling
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('.contact-form form');
+  const formMessage = document.getElementById('formMessage');
+  
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      // Show sending state
+      const submitBtn = this.querySelector('.submit-btn');
+      if (submitBtn) {
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+        
+        // Reset button after 5 seconds if form submission fails
+        setTimeout(() => {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        }, 5000);
+      }
+    });
+  }
+  
+  // Show success/error messages from Web3Forms
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('success')) {
+    showFormMessage('success', 'Thank you! Your message has been sent. We\'ll respond within 24 hours.');
+  }
+  if (urlParams.has('error')) {
+    showFormMessage('error', 'Something went wrong. Please try again or contact us directly.');
+  }
+});
 
+function showFormMessage(type, message) {
+  const formMessage = document.getElementById('formMessage');
+  if (formMessage) {
+    formMessage.className = 'form-message ' + type;
+    formMessage.textContent = message;
+    formMessage.style.display = 'block';
+    
+    // Scroll to message
+    formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Auto-hide after 10 seconds
+    setTimeout(() => {
+      formMessage.style.display = 'none';
+    }, 10000);
+  }
+}
   
 
   // Mobile Navigation Toggle
