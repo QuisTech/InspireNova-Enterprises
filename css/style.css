@@ -658,7 +658,7 @@ section {
   line-height: 1.6;
 }
 
-/* Image Section */
+/* Image Section with better caption positioning */
 .about-image {
   position: relative;
   border-radius: 12px;
@@ -679,24 +679,55 @@ section {
   transform: scale(1.03);
 }
 
+/* Image Caption - positioned higher up with gradient */
 .image-caption {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(18, 18, 18, 0.9));
+  bottom: 30px; /* Moved up from bottom */
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(to right, 
+    rgba(219, 74, 43, 0.9), 
+    rgba(30, 39, 73, 0.8));
   color: white;
-  padding: 20px;
+  padding: 15px 20px;
+  border-radius: 8px;
   font-style: italic;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.1rem;
+  gap: 12px;
+  font-size: 1.05rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  border-left: 3px solid var(--accent);
 }
 
 .image-caption .fa-quote-left {
-  color: var(--primary-light);
-  font-size: 1.3rem;
+  color: var(--accent);
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .image-caption {
+    bottom: 20px;
+    left: 15px;
+    right: 15px;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+  }
+  
+  .image-caption .fa-quote-left {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+  }
 }
 
 /* Values Sections */
