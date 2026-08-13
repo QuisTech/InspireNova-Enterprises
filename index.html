@@ -466,6 +466,7 @@
 
     <!-- Personal Projects Tab -->
     <div class="portfolio-tab-content active" id="personal-tab">
+      <a id="portfolio-personal" style="display:block; position:relative; top:-100px; visibility:hidden;"></a>
       <div class="tab-description">
         <h3>Hands-On Technical Projects</h3>
         <p>Projects I've personally architected and built as a Principal Software Engineer</p>
@@ -696,6 +697,7 @@
 
     <!-- Company Projects Tab -->
     <div class="portfolio-tab-content" id="company-tab">
+      <a id="portfolio-company" style="display:block; position:relative; top:-100px; visibility:hidden;"></a>
       <div class="tab-description">
         <h3>Client Solutions</h3>
         <p>Enterprise projects delivered by InspireNova for our clients</p>
@@ -1066,14 +1068,31 @@
           });
         });
         
-        // Check URL hash on load
-        const hash = window.location.hash;
-        if (hash.includes('company')) {
-          const companyBtn = document.querySelector('.tab-btn[data-tab="company"]');
-          if (companyBtn) {
-            setTimeout(() => companyBtn.click(), 100);
+        // Check URL hash on load & handle hash scrolling
+        function handleHashRouting() {
+          const hash = window.location.hash;
+          if (!hash || !hash.includes('portfolio')) return;
+
+          if (hash.includes('company')) {
+            const companyBtn = document.querySelector('.tab-btn[data-tab="company"]');
+            if (companyBtn) companyBtn.click();
+          } else {
+            const personalBtn = document.querySelector('.tab-btn[data-tab="personal"]');
+            if (personalBtn) personalBtn.click();
+          }
+
+          const targetEl = document.getElementById('portfolio-personal') || document.getElementById('portfolio');
+          if (targetEl) {
+            setTimeout(function() {
+              const topPos = targetEl.getBoundingClientRect().top + window.pageYOffset - 80;
+              window.scrollTo({ top: topPos, behavior: 'smooth' });
+            }, 100);
           }
         }
+
+        window.addEventListener('load', handleHashRouting);
+        window.addEventListener('hashchange', handleHashRouting);
+        setTimeout(handleHashRouting, 150);
         
         // Initial card animation
         setTimeout(() => {
