@@ -453,31 +453,19 @@
         </div>
       </div>
     </div>
-  </section>
-
-<!-- ===== PORTFOLIO SECTION ===== -->
+  <!-- ===== PORTFOLIO SECTION ===== -->
 <section class="portfolio" id="portfolio">
   <div class="container">
     <div class="text-center">
       <h2>Portfolio Showcase</h2>
       <p class="intro">
-        Explore our software engineering projects, production systems, and reference architectures
+        Explore our flagship software engineering projects, production systems, and AI architectures
       </p>
-      
-      <!-- Portfolio Toggle Tabs -->
-      <div class="portfolio-tabs">
-        <button class="tab-btn active" data-tab="personal">Featured Technical Projects</button>
-        <button class="tab-btn" data-tab="company">Architecture & R&D Concepts</button>
-      </div>
     </div>
 
-    <!-- Personal Projects Tab -->
+    <!-- Technical Projects Grid -->
     <div class="portfolio-tab-content active" id="personal-tab">
       <a id="portfolio-personal" style="display:block; position:relative; top:-100px; visibility:hidden;"></a>
-      <div class="tab-description">
-        <h3>Hands-On Technical Projects</h3>
-        <p>Projects personally architected and engineered as Principal Software Engineer</p>
-      </div>
       
       <div class="portfolio-grid">
         <!-- Flagship Project 1: EIB Group LMS Dashboard -->
@@ -573,7 +561,7 @@
           </div>
         </div>
 
-        <!-- Project 1: ArchFlow -->
+        <!-- Project 4: ArchFlow -->
         <div class="portfolio-card fade-in" data-category="ai web architecture">
           <div class="portfolio-badge" data-badge="Personal Project">Personal Project</div>
           <div class="portfolio-img">
@@ -605,7 +593,7 @@
           </div>
         </div>
 
-        <!-- Project 2: Talespin -->
+        <!-- Project 5: Talespin -->
         <div class="portfolio-card fade-in" data-category="ai voice hackathon">
           <div class="portfolio-badge" data-badge="Hackathon Project">Hackathon Project</div>
           <div class="portfolio-img">
@@ -636,7 +624,7 @@
           </div>
         </div>
 
-        <!-- Project 3: TalentMatch -->
+        <!-- Project 6: TalentMatch -->
         <div class="portfolio-card fade-in" data-category="ai web saas">
           <div class="portfolio-badge" data-badge="Personal Project">Personal Project</div>
           <div class="portfolio-img">
@@ -667,7 +655,7 @@
           </div>
         </div>
 
-        <!-- Project 4: NaijaBiz Shield -->
+        <!-- Project 7: NaijaBiz Shield -->
         <div class="portfolio-card fade-in" data-category="security web">
           <div class="portfolio-badge" data-badge="Personal Project">Personal Project</div>
           <div class="portfolio-img">
@@ -697,138 +685,8 @@
             </div>
           </div>
         </div>
-        
-        <!-- Add more personal projects here -->
       </div>
-    </div>
-
-    <!-- Architecture & R&D Concepts Tab -->
-    <div class="portfolio-tab-content" id="company-tab">
-      <a id="portfolio-company" style="display:block; position:relative; top:-100px; visibility:hidden;"></a>
-      <div class="tab-description">
-        <h3>System Blueprints & Reference Architecture</h3>
-        <p>Architectural specifications and engineering concept models designed by InspireNova</p>
-      </div>
-      
-      <div class="portfolio-grid">
-        <!-- Concept 1 -->
-        <div class="portfolio-card fade-in" data-category="ecommerce web">
-          <div class="portfolio-badge" style="background:#6366F1; color:white;">R&D Concept</div>
-          <div class="portfolio-img">
-            <img src="assets/images/project1.jpg" alt="E-commerce Architecture Blueprint">
-          </div>
-          <div class="portfolio-body">
-            <h3>E-Commerce Microservices Reference Architecture</h3>
-            <p><strong>Type:</strong> Technical Blueprint & Engineering Spec</p>
-            <p><strong>Focus:</strong> Scalable Microservices, Payment Gateways, Analytics</p>
-            <p>Distributed e-commerce system blueprint featuring event-driven inventory sync, multi-gateway payment abstraction, and real-time streaming analytics.</p>
-            
-            <div class="portfolio-highlights">
-              <span class="highlight-tag">Event-Driven Architecture</span>
-              <span class="highlight-tag">Payment Abstraction</span>
-              <span class="highlight-tag">Realtime Telemetry</span>
-            </div>
-            
-            <div class="portfolio-stats">
-              <span class="stat-badge">System Blueprint</span>
-              <span class="stat-badge">Microservices</span>
-              <span class="stat-badge">R&D Reference</span>
-            </div>
-            
-            <div class="portfolio-actions">
-              <a href="#contact" class="btn btn-primary">Request Architecture Spec</a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Concept 2 -->
-        <div class="portfolio-card fade-in" data-category="mobile fintech">
-          <div class="portfolio-badge" style="background:#6366F1; color:white;">R&D Concept</div>
-          <div class="portfolio-img">
-            <img src="assets/images/project2.jpg" alt="Banking App Security Spec">
-          </div>
-          <div class="portfolio-body">
-            <h3>Biometric Fintech Security Specification</h3>
-            <p><strong>Type:</strong> Security & Mobile Blueprint</p>
-            <p><strong>Focus:</strong> Biometric Auth, Fraud Mitigation, API Gateway</p>
-            <p>Cross-platform mobile security blueprint with biometric hardware enclave integration, zero-trust session management, and real-time fraud monitoring.</p>
-            
-            <div class="portfolio-highlights">
-              <span class="highlight-tag">Biometric Enclave</span>
-              <span class="highlight-tag">Zero-Trust Sessions</span>
-              <span class="highlight-tag">Fraud Anomaly Model</span>
-            </div>
-            
-            <div class="portfolio-stats">
-              <span class="stat-badge">Security Spec</span>
-              <span class="stat-badge">Zero-Trust</span>
-              <span class="stat-badge">R&D Reference</span>
-            </div>
-            
-            <div class="portfolio-actions">
-              <a href="#contact" class="btn btn-primary">Request Architecture Spec</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Concept 3 -->
-        <div class="portfolio-card fade-in" data-category="edtech web">
-          <div class="portfolio-badge" style="background:#6366F1; color:white;">R&D Concept</div>
-          <div class="portfolio-img">
-            <img src="assets/images/project5.jpg" alt="EdTech LMS Platform Spec">
-          </div>
-          <div class="portfolio-body">
-            <h3>High-Concurrency Cloud LMS Blueprint</h3>
-            <p><strong>Type:</strong> EdTech & Cloud Infrastructure Spec</p>
-            <p><strong>Focus:</strong> Concurrent Video Streaming, Assessment Engine</p>
-            <p>Scalable learning management system architecture optimized for low-bandwidth environments, featuring offline-first content sync and secure exam proctoring.</p>
-            
-            <div class="portfolio-highlights">
-              <span class="highlight-tag">Low-Bandwidth Sync</span>
-              <span class="highlight-tag">Secure Proctoring</span>
-              <span class="highlight-tag">Assessment Engine</span>
-            </div>
-            
-            <div class="portfolio-stats">
-              <span class="stat-badge">Cloud Architecture</span>
-              <span class="stat-badge">EdTech System</span>
-              <span class="stat-badge">R&D Reference</span>
-            </div>
-            
-            <div class="portfolio-actions">
-              <a href="#contact" class="btn btn-primary">Request Architecture Spec</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Concept 4 -->
-        <div class="portfolio-card fade-in" data-category="software iot automation">
-          <div class="portfolio-badge" style="background:#6366F1; color:white;">R&D Concept</div>
-          <div class="portfolio-img">
-            <img src="assets/images/project4.jpg" alt="Manufacturing IoT System Blueprint">
-          </div>
-          <div class="portfolio-body">
-            <h3>Industrial IoT & Predictive Maintenance Spec</h3>
-            <p><strong>Type:</strong> IoT & Industrial Automation Architecture</p>
-            <p><strong>Focus:</strong> Telemetry Ingestion, Machine Learning Anomaly Detection</p>
-            <p>Unified industrial telemetry ingestion platform integrating MQTT edge brokers, time-series databases, and predictive maintenance ML inference engines.</p>
-            
-            <div class="portfolio-highlights">
-              <span class="highlight-tag">MQTT Edge Ingestion</span>
-              <span class="highlight-tag">Time-Series Data</span>
-              <span class="highlight-tag">Predictive Maintenance AI</span>
-            </div>
-            
-            <div class="portfolio-stats">
-              <span class="stat-badge">Industrial IoT</span>
-              <span class="stat-badge">Edge Compute</span>
-              <span class="stat-badge">R&D Reference</span>
-            </div>
-            
-            <div class="portfolio-actions">
-              <a href="#contact" class="btn btn-primary">Request Architecture Spec</a>
-            </div>
-          </div>
+    </div>>
         </div>
 
     <!-- Add CSS for this structure -->
