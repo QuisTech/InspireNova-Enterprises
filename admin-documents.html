@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Portal & AI Link Manager - InspireNova Enterprises</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <style>
+    /* Admin Portal Styles */
+    body {
+      background-color: var(--bg-darker);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-main {
+      flex: 1;
+      padding: 120px 0 60px;
+    }
+
+    .admin-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 156, 0, 0.15);
+      border: 1px solid var(--accent);
+      color: #ffb84d;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .page-title-box {
+      margin-bottom: 35px;
+    }
+
+    .page-title-box h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    .page-title-box h1 span {
+      color: var(--primary);
+    }
+
+    .page-title-box p {
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    /* Admin PIN Lock Screen */
+    .lock-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .lock-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .lock-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: rgba(219, 74, 43, 0.15);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 20px;
+    }
+
+    .lock-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: var(--secondary);
+    }
+
+    .lock-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 14px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--secondary);
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 4px;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    .pin-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(219, 74, 43, 0.3);
+    }
+
+    .pin-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 15px;
+    }
+
+    /* Admin Grid Layout */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .portal-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .panel-header i {
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    .panel-header h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      text-align: left;
+      color: var(--secondary);
+    }
+
+    /* Upload Dropzone */
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 35px 20px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--primary);
+      background: rgba(219, 74, 43, 0.06);
+    }
+
+    .dropzone i {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .dropzone p {
+      margin-bottom: 6px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .dropzone span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    /* Direct AI Link Generator Panel */
+    .link-preview-box {
+      background: var(--bg-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .link-preview-header {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .generated-url-text {
+      font-family: monospace;
+      font-size: 0.92rem;
+      color: #93c5fd;
+      word-break: break-all;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .ai-prompt-box {
+      margin-top: 20px;
+    }
+
+    .ai-prompt-box h3 {
+      font-size: 1rem;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .prompt-choice-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .prompt-choice-btn:hover {
+      background: rgba(219, 74, 43, 0.12);
+      border-color: var(--primary);
+      color: var(--secondary);
+    }
+
+    /* Documents Inventory Table */
+    .inventory-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .inventory-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .inventory-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .inventory-table th, .inventory-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+
+    .inventory-table th {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.5px;
+    }
+
+    .inventory-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-default {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+    }
+
+    .badge-custom {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid #10b981;
+    }
+
+    .action-btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #f87171;
+    }
+
+    .btn-danger:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    /* Toast */
+    .toast-notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #10b981;
+      color: #ffffff;
+      padding: 14px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 10000;
+    }
+
+    .toast-notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 992px) {
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .inventory-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== PIN / ACCESS GATE ===== -->
+  <div class="lock-overlay" id="lockOverlay">
+    <div class="lock-card">
+      <div class="lock-icon">
+        <i class="fas fa-user-shield"></i>
+      </div>
+      <h2>InspireNova Document Portal</h2>
+      <p>Please enter your administrator PIN to upload documents and generate AI links.</p>
+      <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="8" autofocus>
+      <button class="btn btn-primary" style="width: 100%;" id="unlockBtn">
+        <i class="fas fa-unlock"></i> Unlock Dashboard
+      </button>
+      <div class="pin-hint">Default PIN: <strong>1234</strong> (You can change this anytime inside)</div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER / NAVIGATION ===== -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo">
+          <img src="assets/images/inova-logo.png" alt="InspireNova Logo">
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="documents.html">Public Documents</a></li>
+            <li><a href="admin-documents.html" class="active">Document Portal</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="documents.html" class="btn btn-outline">
+            <i class="fas fa-eye"></i> View Public Hub
+          </a>
+          <button class="btn btn-secondary btn-sm" id="lockBtn" title="Lock session">
+            <i class="fas fa-lock"></i> Lock
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="admin-main">
+    <div class="container">
+      <div class="page-title-box">
+        <div class="admin-header-badge">
+          <i class="fas fa-shield-alt"></i> Administrator Document & AI Manager
+        </div>
+        <h1>Manage Documents & <span>AI Links</span></h1>
+        <p>
+          Add new documents to your website, generate direct public URLs for AI analysis (Gemini, ChatGPT, Claude), and control which documents appear in the public library.
+        </p>
+      </div>
+
+      <!-- ===== TWO-COLUMN ADMIN GRID ===== -->
+      <div class="admin-grid">
+
+        <!-- Column 1: Document Uploader Form -->
+        <div class="portal-panel">
+          <div class="panel-header">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h2>Upload / Add Document</h2>
+          </div>
+
+          <form id="uploadForm">
+            <!-- Dropzone -->
+            <div class="dropzone" id="dropzone">
+              <i class="fas fa-file-pdf"></i>
+              <p>Drag & drop your PDF file here, or click to browse</p>
+              <span>Supported files: .pdf, .docx, .txt, .html (Max 50MB)</span>
+              <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.txt,.html" style="display: none;">
+            </div>
+
+            <div id="fileSelectedBadge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; padding: 10px 14px; margin-bottom: 18px; font-size: 0.9rem; color: #34d399;">
+              <i class="fas fa-check-circle"></i> <span id="selectedFileName">filename.pdf</span> (<span id="selectedFileSize">0 KB</span>)
+            </div>
+
+            <!-- Title & Category -->
+            <div class="form-group">
+              <label for="docTitle">Document Title *</label>
+              <input type="text" id="docTitle" class="form-control" placeholder="e.g. InspireNova Q4 Financial & Growth Report" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="docCategory">Category *</label>
+                <select id="docCategory" class="form-control" required>
+                  <option value="pitch-deck">Pitch Deck</option>
+                  <option value="overview">Company Overview</option>
+                  <option value="technical">Technical Specs</option>
+                  <option value="reports" selected>Reports & Briefs</option>
+                  <option value="policy">Policy & Compliance</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="docDate">Publication Date</label>
+                <input type="text" id="docDate" class="form-control" placeholder="e.g. Nov 2025">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="docFilename">File Path or External Cloud URL *</label>
+              <input type="text" id="docFilename" class="form-control" placeholder="documents/your-file.pdf or https://..." required>
+              <small style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-top: 4px;">
+                Tip: Place file in project's <code>documents/</code> directory or paste an S3/Cloudflare R2/Vercel Blob link.
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="docDesc">Short Description</label>
+              <textarea id="docDesc" class="form-control" placeholder="Summary of what this document covers and what insights an AI or client will find..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+              <i class="fas fa-plus-circle"></i> Save to Document Library
+            </button>
+          </form>
+        </div>
+
+        <!-- Column 2: Direct AI Link & Prompt Generator -->
+        <div class="portal-panel">
+          <div class="panel-header">
+            <i class="fas fa-robot"></i>
+            <h2>Live AI Link & Prompt Generator</h2>
+          </div>
+
+          <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 18px;">
+            This is the exact direct link you share with AI agents (Gemini, ChatGPT, Claude). Standard HTTP GET delivers the raw file with no redirects.
+          </p>
+
+          <div class="link-preview-box">
+            <div class="link-preview-header">
+              <span>Direct Public Document URL</span>
+              <button class="btn btn-outline btn-sm" id="copyLiveUrlBtn">
+                <i class="fas fa-copy"></i> Copy Link
+              </button>
+            </div>
+            <div class="generated-url-text" id="liveUrlPreview">
+              https://yourdomain.com/documents/InspireNova_Overview_2025.pdf
+            </div>
+          </div>
+
+          <!-- Prompt Generator -->
+          <div class="ai-prompt-box">
+            <h3><i class="fas fa-magic text-accent"></i> 1-Click AI Prompts for this Document:</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
+              Click any prompt below to copy it with the document link automatically inserted:
+            </p>
+
+            <button class="prompt-choice-btn" onclick="copyCustomPrompt('summary')">
+              <strong><i class="fas fa-list-ul"></i> Executive Summary & Insights:</strong><br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">"Analyze this document: [URL] and extract top 5 takeaways"</span>
+            </button>
+
+            <button class="prompt-choice-btn" onclick="copyCustomPrompt('critique')">
+              <strong><i class="fas fa-search-dollar"></i> Business & Financial Critique:</strong><br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">"Review business model, risk factors, and revenue roadmap in: [URL]"</span>
+            </button>
+
+            <button class="prompt-choice-btn" onclick="copyCustomPrompt('technical')">
+              <strong><i class="fas fa-microchip"></i> Technical Architecture Audit:</strong><br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">"Audit the technical specifications, security, and scalability in: [URL]"</span>
+            </button>
+
+            <button class="prompt-choice-btn" onclick="copyCustomPrompt('qa')">
+              <strong><i class="fas fa-question-circle"></i> Interactive Q&A Assistant:</strong><br>
+              <span style="color: var(--text-muted); font-size: 0.8rem;">"You are an expert advisor on this document: [URL]. I will ask questions..."</span>
+            </button>
+          </div>
+
+          <!-- Settings box -->
+          <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Change Admin PIN</span>
+            <button class="btn btn-outline btn-sm" id="changePinBtn">
+              <i class="fas fa-key"></i> Update PIN
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== INVENTORY / DOCUMENT REGISTRY ===== -->
+      <div class="inventory-section">
+        <div class="inventory-header">
+          <div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: var(--secondary);">
+              <i class="fas fa-folder-open text-primary"></i> Current Document Inventory
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.88rem; margin: 5px 0 0;">
+              All documents currently active in your public library.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-outline btn-sm" id="exportJsonBtn">
+              <i class="fas fa-file-export"></i> Export JSON
+            </button>
+            <button class="btn btn-outline btn-sm" id="resetDefaultsBtn">
+              <i class="fas fa-undo"></i> Reset to Defaults
+            </button>
+          </div>
+        </div>
+
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th>Document Title</th>
+              <th>Category</th>
+              <th>Path / Direct URL</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody">
+            <!-- Injected dynamically via JS -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-notification" id="toastNotification">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Action completed!</span>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container text-center" style="padding: 25px 0;">
+      <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+        &copy; 2025 InspireNova Enterprises — Internal Administration Portal
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Security PIN Management
+    const PIN_KEY = 'inspirenova_admin_pin';
+    const AUTH_SESSION_KEY = 'inspirenova_auth_session';
+    const DOCS_KEY = 'inspirenova_docs_registry';
+
+    function getStoredPin() {
+      return localStorage.getItem(PIN_KEY) || '1234';
+    }
+
+    function checkAuth() {
+      if (sessionStorage.getItem(AUTH_SESSION_KEY) === 'true') {
+        document.getElementById('lockOverlay').style.display = 'none';
+      } else {
+        document.getElementById('lockOverlay').style.display = 'flex';
+      }
+    }
+
+    document.getElementById('unlockBtn').addEventListener('click', verifyPin);
+    document.getElementById('pinInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') verifyPin();
+    });
+
+    function verifyPin() {
+      const entered = document.getElementById('pinInput').value.trim();
+      if (entered === getStoredPin()) {
+        sessionStorage.setItem(AUTH_SESSION_KEY, 'true');
+        document.getElementById('lockOverlay').style.display = 'none';
+        showToast("Authenticated successfully!");
+      } else {
+        alert("Incorrect PIN. Please try again. (Default is 1234)");
+        document.getElementById('pinInput').value = '';
+      }
+    }
+
+    document.getElementById('lockBtn').addEventListener('click', () => {
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      document.getElementById('lockOverlay').style.display = 'flex';
+      document.getElementById('pinInput').value = '';
+    });
+
+    document.getElementById('changePinBtn').addEventListener('click', () => {
+      const currentPin = prompt("Enter current PIN:");
+      if (currentPin !== getStoredPin()) {
+        alert("Current PIN is incorrect.");
+        return;
+      }
+      const newPin = prompt("Enter new PIN (4 to 8 digits):");
+      if (newPin && newPin.length >= 4) {
+        localStorage.setItem(PIN_KEY, newPin);
+        alert("PIN updated successfully! Remember your new PIN: " + newPin);
+      } else {
+        alert("PIN must be at least 4 characters.");
+      }
+    });
+
+    // Default static documents
+    const defaultDocuments = [
+      {
+        id: "doc-1",
+        title: "InspireNova Enterprises - Company Overview 2025",
+        category: "overview",
+        categoryLabel: "Company Overview",
+        format: "PDF",
+        size: "844 KB",
+        date: "Nov 2025",
+        description: "Official executive overview of InspireNova Enterprises, covering business capabilities, digital transformation tools, and corporate profile.",
+        url: "documents/InspireNova_Overview_2025.pdf",
+        isDefault: true
+      },
+      {
+        id: "doc-2",
+        title: "InspireNova Comprehensive Investor Pitch Deck",
+        category: "pitch-deck",
+        categoryLabel: "Pitch Deck",
+        format: "HTML/Deck",
+        size: "Online Deck",
+        date: "2025",
+        description: "Complete strategic investor pitch deck highlighting enterprise value propositions, growth roadmap, and target market opportunities.",
+        url: "InspireNovaInvestorPitchDeck.html",
+        isDefault: true
+      },
+      {
+        id: "doc-3",
+        title: "NaijaBizShield Investor Pitch Deck",
+        category: "pitch-deck",
+        categoryLabel: "Pitch Deck",
+        format: "HTML/Deck",
+        size: "Online Deck",
+        date: "2025",
+        description: "Cybersecurity and business protection deck for MSMEs in Nigeria, outlining threat landscapes and defensive solutions.",
+        url: "NaijaBizShieldInvestorPitchDeck.html",
+        isDefault: true
+      },
+      {
+        id: "doc-4",
+        title: "TalentMatch Strategic Pitch Deck",
+        category: "pitch-deck",
+        categoryLabel: "Pitch Deck",
+        format: "HTML/Deck",
+        size: "Online Deck",
+        date: "2025",
+        description: "Tech recruitment platform connecting vetted Nigerian engineering talent with international organizations.",
+        url: "TalentMatchInvestorPitchDeck.html",
+        isDefault: true
+      },
+      {
+        id: "doc-5",
+        title: "Global Talent Visa (GTV) Technical Portfolio",
+        category: "technical",
+        categoryLabel: "Technical Specs",
+        format: "HTML/Portfolio",
+        size: "Full Portfolio",
+        date: "2025",
+        description: "Technical evidence portfolio documenting full-stack architecture, microservices, and system implementations.",
+        url: "GTV_Applicant.html",
+        isDefault: true
+      }
+    ];
+
+    function getCustomDocuments() {
+      const stored = localStorage.getItem(DOCS_KEY);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveCustomDocuments(docs) {
+      localStorage.setItem(DOCS_KEY, JSON.stringify(docs));
+    }
+
+    function getAbsoluteUrl(relUrl) {
+      if (relUrl.startsWith('http://') || relUrl.startsWith('https://')) {
+        return relUrl;
+      }
+      const origin = window.location.origin;
+      const path = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+      return `${origin}${path}${relUrl}`.replace(/\/+/g, '/').replace(':/', '://');
+    }
+
+    // Render Table
+    function renderInventory() {
+      const customDocs = getCustomDocuments();
+      const allDocs = [...customDocs, ...defaultDocuments];
+      const tbody = document.getElementById('inventoryTableBody');
+      tbody.innerHTML = '';
+
+      allDocs.forEach((doc, index) => {
+        const fullUrl = getAbsoluteUrl(doc.url);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <strong>${doc.title}</strong>
+            <div style="color: var(--text-muted); font-size: 0.8rem;">${doc.description ? doc.description.substring(0, 60) + '...' : ''}</div>
+          </td>
+          <td><span class="badge-pill badge-default">${doc.categoryLabel || doc.category}</span></td>
+          <td>
+            <a href="${doc.url}" target="_blank" style="color: #93c5fd; font-family: monospace; font-size: 0.85rem;">
+              ${doc.url}
+            </a>
+          </td>
+          <td>
+            ${doc.isDefault 
+              ? '<span class="badge-pill badge-default"><i class="fas fa-lock"></i> Built-in</span>' 
+              : '<span class="badge-pill badge-custom"><i class="fas fa-check"></i> Custom</span>'}
+          </td>
+          <td>
+            <div class="action-btn-group">
+              <button class="btn btn-primary btn-sm" onclick="selectDocForAi('${fullUrl}')" title="Generate AI prompts and copy link">
+                <i class="fas fa-robot"></i> AI Link
+              </button>
+              ${!doc.isDefault ? `
+                <button class="btn btn-danger btn-sm" onclick="deleteCustomDoc('${doc.id}')" title="Delete custom document">
+                  <i class="fas fa-trash"></i>
+                </button>
+              ` : ''}
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // File selection & Dropzone
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleFileSelection(e.dataTransfer.files[0]);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFileSelection(e.target.files[0]);
+      }
+    });
+
+    function handleFileSelection(file) {
+      const sanitizedName = file.name.replace(/\s+/g, '_');
+      document.getElementById('selectedFileName').textContent = file.name;
+      document.getElementById('selectedFileSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+      document.getElementById('fileSelectedBadge').style.display = 'block';
+
+      // Auto-fill fields if empty
+      if (!document.getElementById('docTitle').value) {
+        const titleWithoutExt = file.name.replace(/\.[^/.]+$/, "").replace(/[_-]/g, " ");
+        document.getElementById('docTitle').value = titleWithoutExt;
+      }
+      document.getElementById('docFilename').value = `documents/${sanitizedName}`;
+
+      updateLivePreview();
+      showToast(`Selected "${file.name}"!`);
+    }
+
+    // Form submit
+    document.getElementById('uploadForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('docTitle').value.trim();
+      const category = document.getElementById('docCategory').value;
+      const categoryText = document.getElementById('docCategory').options[document.getElementById('docCategory').selectedIndex].text;
+      const date = document.getElementById('docDate').value.trim() || 'Nov 2025';
+      const filename = document.getElementById('docFilename').value.trim();
+      const desc = document.getElementById('docDesc').value.trim();
+
+      const newDoc = {
+        id: 'doc-custom-' + Date.now(),
+        title: title,
+        category: category,
+        categoryLabel: categoryText,
+        format: filename.toUpperCase().endsWith('.PDF') ? 'PDF' : 'DOC',
+        size: 'Custom File',
+        date: date,
+        description: desc,
+        url: filename,
+        isDefault: false
+      };
+
+      const customDocs = getCustomDocuments();
+      customDocs.unshift(newDoc);
+      saveCustomDocuments(customDocs);
+
+      renderInventory();
+      selectDocForAi(getAbsoluteUrl(newDoc.url));
+
+      // Reset form
+      document.getElementById('uploadForm').reset();
+      document.getElementById('fileSelectedBadge').style.display = 'none';
+
+      showToast(`Document "${title}" saved and added to Public Hub!`);
+    });
+
+    // Delete custom doc
+    function deleteCustomDoc(id) {
+      if (!confirm("Are you sure you want to remove this document from the library?")) return;
+      let customDocs = getCustomDocuments();
+      customDocs = customDocs.filter(d => d.id !== id);
+      saveCustomDocuments(customDocs);
+      renderInventory();
+      showToast("Document removed.");
+    }
+
+    // Select document to inspect & generate AI prompts
+    let activeAiUrl = getAbsoluteUrl("documents/InspireNova_Overview_2025.pdf");
+
+    function selectDocForAi(url) {
+      activeAiUrl = url;
+      document.getElementById('liveUrlPreview').textContent = url;
+      showToast("AI URL ready to copy!");
+    }
+
+    function updateLivePreview() {
+      const filename = document.getElementById('docFilename').value.trim() || 'documents/InspireNova_Overview_2025.pdf';
+      const full = getAbsoluteUrl(filename);
+      activeAiUrl = full;
+      document.getElementById('liveUrlPreview').textContent = full;
+    }
+
+    document.getElementById('docFilename').addEventListener('input', updateLivePreview);
+
+    // Copy live url
+    document.getElementById('copyLiveUrlBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(activeAiUrl).then(() => {
+        showToast("Copied direct AI URL!");
+      });
+    });
+
+    // Prompt generator
+    function copyCustomPrompt(type) {
+      let promptText = '';
+      if (type === 'summary') {
+        promptText = `Please read and synthesize the document at this URL: ${activeAiUrl}\n\n1. Provide an executive summary.\n2. List the 5 most critical strategic takeaways.\n3. Identify any major timelines or target markets mentioned.`;
+      } else if (type === 'critique') {
+        promptText = `Act as an expert venture capitalist and tech strategist. Review the document here: ${activeAiUrl}\n\nCritique the business model, unit economics, market viability, and risk factors. Recommend three concrete growth levers.`;
+      } else if (type === 'technical') {
+        promptText = `Act as a Principal Solutions Architect. Analyze this technical document: ${activeAiUrl}\n\nEvaluate its architectural robustness, security compliance, scalability, and stack recommendations.`;
+      } else if (type === 'qa') {
+        promptText = `You are an AI assistant with comprehensive mastery over the document located at: ${activeAiUrl}\n\nPlease familiarize yourself with its entire content. Let me know when you are ready so I can ask specific questions.`;
+      }
+
+      navigator.clipboard.writeText(promptText).then(() => {
+        showToast("Copied prompt with document link ready for ChatGPT/Claude/Gemini!");
+      });
+    }
+
+    // Export JSON
+    document.getElementById('exportJsonBtn').addEventListener('click', () => {
+      const customDocs = getCustomDocuments();
+      const all = [...customDocs, ...defaultDocuments];
+      const blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'inspirenova-documents-manifest.json';
+      a.click();
+      showToast("Exported documents manifest!");
+    });
+
+    // Reset Defaults
+    document.getElementById('resetDefaultsBtn').addEventListener('click', () => {
+      if (confirm("Reset custom documents? This will clear locally added custom documents.")) {
+        localStorage.removeItem(DOCS_KEY);
+        renderInventory();
+        showToast("Reset to default documents.");
+      }
+    });
+
+    // Toast
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Init
+    checkAuth();
+    renderInventory();
+    updateLivePreview();
+  </script>
+</body>
+</html>
+
